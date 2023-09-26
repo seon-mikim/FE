@@ -1,8 +1,9 @@
 import React from "react";
 import "./MainPage.css";
-import Card from "../../components/Card/Card";
 import styled from "styled-components";
 import ProductDetailPage from "./../detail/ProductDetailPage";
+import SubPage from "./SubPage";
+import CardLi from './../../components/Card/CardLi';
 
 const MainPage = () => {
   return (
@@ -13,21 +14,14 @@ const MainPage = () => {
           <Bar />
         </ListTitle>
         <ItemListGrid>
-          <ItemList>
-            <Card />
-          </ItemList>
-          <ItemList>
-            <Card />
-          </ItemList>
-          <ItemList>
-            <Card />
-          </ItemList>
-          <ItemList>
-            <Card />
-          </ItemList>
+          <CardLi/>
+          <CardLi/>
+          <CardLi/>
+          <CardLi/>
         </ItemListGrid>
       </Section>
       <ProductDetailPage />
+      <SubPage />
     </>
   );
 };
@@ -57,15 +51,4 @@ const ItemListGrid = styled.ul`
   display: flex;
   flex-wrap: wrap;
   padding: 60px 5% 0;
-`;
-const ItemList = styled.li`
-  width: 25%;
-  display: flex;
-  justify-content: center;
-  @media screen and (max-width: 1600px){
-    width: 50%;
-  }
-  @media screen and (max-width: 820px){
-    width: 100%;
-  }
 `;

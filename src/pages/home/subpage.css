@@ -1,0 +1,21 @@
+.sub-title {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.sub-list-title {
+  font-size: 28px;
+  margin: 0 0 30px;
+  padding: 0 0 18px;
+}
+.sub-list-select {
+  display: flex;
+  font-size: 14px;
+}
+.sub-list-btn {
+  border: 1px solid #e1e1e1;
+  color: #2e2e2e;
+  padding: 12px 20px;
+  margin: 0 3px 5px 3px;
+  line-height: 14px;
+}

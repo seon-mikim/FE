@@ -58,6 +58,8 @@
 }
 .option {
   border: 1px solid #d5d5d5;
+  padding: 0.3rem;
+  width: 100%;
 }
 .tr {
   display: flex;
@@ -75,13 +77,13 @@
 }
 .td {
   width: 80%;
-  overflow: hidden;
 }
 .td ul {
   padding: 0.5rem 0.5rem;
   line-height: 150%;
+  position: relative;
 }
 
-.sold-out{
+.sold-out {
   margin-left: 0.5rem;
 }

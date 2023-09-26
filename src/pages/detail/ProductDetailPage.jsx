@@ -1,11 +1,9 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import "./detail.css";
 
 const ProductDetailPage = () => {
   const p1 = "/p1.jpg";
   const soldout = "/soldout.png";
-  const [view, setView] = useState(false);
   return (
     <Section>
       <div className="img-area">
@@ -25,23 +23,12 @@ const ProductDetailPage = () => {
         <div className="tr">
           <div className="th">사이즈</div>
           <div className="td">
-            <ul
-              onClick={() => {
-                setView(!view);
-              }}
-              className="option"
-            >
-              - [필수] 옵션을 선택해 주세요 -
-              {view && (
-                <>
-                  {/* <li>- [필수] 옵션을 선택해 주세요 -</li> */}
-                  <li>S</li>
-                  <li>M</li>
-                  <li>L</li>
-                  <li>XL</li>
-                </>
-              )}
-            </ul>
+            <select className="option">
+              <option value="">- [필수] 옵션을 선택해 주세요 -</option>
+              <option value="s">S</option>
+              <option value="m">M</option>
+              <option value="l">L</option>
+            </select>
           </div>
         </div>
 

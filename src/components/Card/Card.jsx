@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const Card = () => {
@@ -24,11 +23,12 @@ const ItemListBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 24rem;
+  width: 90%;
+  margin-bottom: 70px;
 `;
 const ThumbnailDiv = styled.div`
-  width: 22rem;
-  height: 22rem;
+  width: 100%;
+  height: 100%;
 `;
 const ThumbnailImg = styled.img`
   width: 100%;
