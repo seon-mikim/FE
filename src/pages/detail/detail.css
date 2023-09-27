@@ -1,11 +1,11 @@
-.img-div {
+/* .img-div {
   width: 31rem;
   height: 31rem;
   border: 1px solid #ececec;
 }
 .img-div img {
   width: 100%;
-}
+} */
 .title {
   display: flex;
   font-size: 21px;
@@ -86,4 +86,33 @@
 
 .sold-out {
   margin-left: 0.5rem;
+}
+.option-selected{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #dddddd;
+  padding: 15px 14px;
+  font-size: 12px;
+  color: #888784;
+  margin-bottom: 1rem;
+}
+input[type='number']{
+  width: 1rem;
+  height: 1rem;
+  text-align: center;
+}
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+	  -webkit-appearance: none;
+	  margin: 0;
+}
+
+.input-cnt {
+  display: flex;
+}
+
+.button-img{
+  display: flex;
+  flex-direction: column;
 }

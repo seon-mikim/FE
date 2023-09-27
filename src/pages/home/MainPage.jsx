@@ -3,7 +3,7 @@ import "./MainPage.css";
 import styled from "styled-components";
 import ProductDetailPage from "./../detail/ProductDetailPage";
 import SubPage from "./SubPage";
-import CardLi from './../../components/Card/CardLi';
+import CardLi from "./../../components/Card/CardLi";
 
 const MainPage = () => {
   return (
@@ -14,14 +14,25 @@ const MainPage = () => {
           <Bar />
         </ListTitle>
         <ItemListGrid>
-          <CardLi/>
-          <CardLi/>
-          <CardLi/>
-          <CardLi/>
+          <CardLi />
+          <CardLi />
+          <CardLi />
+          <CardLi />
         </ItemListGrid>
       </Section>
-      <ProductDetailPage />
-      <SubPage />
+      
+      <Section>
+        <ListTitle>
+          <ListTitleText>FAKER X DECA</ListTitleText>
+          <Bar />
+        </ListTitle>
+        <ItemListGrid>
+          <CardLi />
+          <CardLi />
+          <CardLi />
+          <CardLi />
+        </ItemListGrid>
+      </Section>
     </>
   );
 };

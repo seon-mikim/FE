@@ -2,6 +2,10 @@ import styled from "styled-components";
 import CardLi from "./../../components/Card/CardLi";
 import "./subpage.css";
 const SubPage = () => {
+  const first = "/first.gif";
+  const prev = "/prev.gif";
+  const next = "/next.gif";
+  const end = "/end.gif";
   return (
     <Section>
       <div className="sub-title">
@@ -18,11 +22,27 @@ const SubPage = () => {
         <CardLi />
         <CardLi />
         <CardLi />
-        <CardLi />
-        <CardLi />
-        <CardLi />
-        <CardLi />
       </ItemListGrid>
+      <div className="pagination">
+        <div>
+          <img src={first} alt="" />
+        </div>
+        <div>
+          <img src={prev} alt="" />
+        </div>
+        <ol>
+          <li className="page-first"><div className="num-selected">1</div></li>
+          <li className="page"><div className="num">2</div></li>
+          <li className="page"><div className="num">3</div></li>
+          <li className="page"><div className="num">4</div></li>
+        </ol>
+        <div>
+          <img src={next} alt="" />
+        </div>
+        <div>
+          <img src={end} alt="" />
+        </div>
+      </div>
     </Section>
   );
 };
@@ -37,16 +57,4 @@ const ItemListGrid = styled.ul`
   display: flex;
   flex-wrap: wrap;
   padding: 60px 5% 0;
-`;
-const ItemList = styled.li`
-  width: 25%;
-  min-width: 300px;
-  display: flex;
-  justify-content: center;
-  @media screen and (max-width: 1600px) {
-    width: 50%;
-  }
-  @media screen and (max-width: 820px) {
-    width: 100%;
-  }
 `;

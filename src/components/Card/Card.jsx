@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Card = () => {
   const p1 = "/p1.jpg";
   const soldout = "/soldout.png";
   return (
-    <ItemListBox>
+    <ItemListBox to="/productdetailpage">
       <ThumbnailDiv>
         <ThumbnailImg src={p1} alt="" />
       </ThumbnailDiv>
@@ -19,12 +20,17 @@ const Card = () => {
 
 export default Card;
 
-const ItemListBox = styled.div`
+const ItemListBox = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 90%;
   margin-bottom: 70px;
+  &:visited,
+  &:link {
+    text-decoration: none;
+    color: #222222;
+  }
 `;
 const ThumbnailDiv = styled.div`
   width: 100%;

@@ -6,16 +6,18 @@
   float: right;
   color: white;
   margin-right: 5rem;
+  margin-top: 1rem;
 }
 .header-inner {
   display: flex;
   justify-content: space-between;
-  padding-top: 4rem;
+  padding-top: 3rem;
   width: 100%;
   color: white;
 }
 .header-inner ul {
   display: flex;
+  margin-left: 6.5rem;
 }
 
 .log {
@@ -25,10 +27,28 @@
   letter-spacing: 0.03em;
   line-height: 1.5;
   margin-right: 5rem;
+  cursor: pointer;
 }
+.log p:hover{
+  color: white;
+}
+.log span{
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  color: white;
+  line-height: 16px;
+  text-align: center;
+  font-size: 11px;
+  border: 1px solid #be2d28;
+  background-color: #be2d28;
+  border-radius: 100px;
+}
+
 .logo {
-  margin-left: 5rem;
+  margin-left: 7rem;
 }
+
 .category {
   padding: 8px 0 30px;
   margin: 3px 18px 0;
@@ -43,6 +63,7 @@
   width: 100%;
   position: fixed;
   top: 0;
+  z-index: 100;
 }
 .header-scrolled-inner {
   display: flex;
@@ -66,4 +87,8 @@
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 0.08em;
+}
+
+.user-button{
+  margin-left: 1.5rem;
 }
