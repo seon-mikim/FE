@@ -1,10 +1,18 @@
-import styled from "styled-components";
+import React from "react";
 import Card from "./Card";
+import styled from "styled-components";
 
-const CardLi = () => {
+const CardLi = ({ id, name, price, img, totalStock, productData }) => {
   return (
     <ItemList>
-      <Card />
+      <Card
+        id={id}
+        name={name}
+        price={price}
+        img={img}
+        totalStock={totalStock}
+        productData={productData}
+      />
     </ItemList>
   );
 };
@@ -13,6 +21,7 @@ export default CardLi;
 
 const ItemList = styled.li`
   width: 25%;
+  height: 100%;
   min-width: 300px;
   display: flex;
   justify-content: center;

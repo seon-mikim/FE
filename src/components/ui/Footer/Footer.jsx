@@ -12,7 +12,8 @@ const Footer = () => {
     window.scrollTo({ top: 10000, behavior: "smooth" });
   };
   return (
-    <>
+    
+    <div className="footer">
       <table width="100%">
         <tbody>
           <tr>
@@ -74,7 +75,8 @@ const Footer = () => {
         <img src={top} alt="" onClick={goToTop} />
         <img src={bottom} alt="" onClick={goToBottom} />
       </div>
-    </>
+      </div>
+    
   );
 };
 

@@ -1,11 +1,76 @@
-import React from "react";
 import "./MainPage.css";
 import styled from "styled-components";
-import ProductDetailPage from "./../detail/ProductDetailPage";
-import SubPage from "./SubPage";
-import CardLi from "./../../components/Card/CardLi";
+import CardLi from "../../components/Card/CardLi";
 
 const MainPage = () => {
+  const productList = [
+    {
+      id: "P00000KP",
+      name: "Denim Shirt Jacket-Black",
+      price: 119000,
+      img: ["/p1.jpg", "/p1-2.png"],
+      buySize: {
+        s: 0,
+        m: 0,
+        l: 0,
+      },
+      buyQuantity: 0,
+      stock: {
+        s: 5,
+        m: 6,
+        l: 4,
+      },
+      totalStock: 15,
+    },
+    {
+      id: "P00000KO",
+      name: "GOALSTUDIO Delight Tote Bag",
+      price: 95200,
+      img: ["/p2.jpg"],
+      buyQuantity: 0,
+      totalStock: 10,
+    },
+    {
+      id: "P00000KQ",
+      name: "Denim Shirt Jacket-Blue",
+      price: 119000,
+      img: ["/p3.jpg", "/p3-2.png"],
+      buySize: {
+        s: 0,
+        m: 0,
+        l: 0,
+      },
+      buyQuantity: 0,
+      stock: {
+        s: 5,
+        m: 6,
+        l: 4,
+      },
+      totalStock: 15,
+    },
+
+    {
+      id: "P00000KA",
+      name: "GOALSTUDIO Delight Bag",
+      price: 119000,
+      img: ["/p4.jpg", "/p4-2.png"],
+      buyQuantity: 0,
+      totalStock: 3,
+    },
+  ];
+  const renderCard = (product) => {
+    return (
+      <CardLi
+        key={product.id}
+        id={product.id}
+        name={product.name}
+        price={product.price}
+        img={product.img}
+        totalStock={product.totalStock}
+        productData={product}
+      />
+    );
+  };
   return (
     <>
       <Section>
@@ -13,25 +78,15 @@ const MainPage = () => {
           <ListTitleText>NEW ARRIVALS</ListTitleText>
           <Bar />
         </ListTitle>
-        <ItemListGrid>
-          <CardLi />
-          <CardLi />
-          <CardLi />
-          <CardLi />
-        </ItemListGrid>
+        <ItemListGrid>{productList.map(renderCard)}</ItemListGrid>
       </Section>
-      
+
       <Section>
         <ListTitle>
           <ListTitleText>FAKER X DECA</ListTitleText>
           <Bar />
         </ListTitle>
-        <ItemListGrid>
-          <CardLi />
-          <CardLi />
-          <CardLi />
-          <CardLi />
-        </ItemListGrid>
+        <ItemListGrid>{productList.map(renderCard)}</ItemListGrid>
       </Section>
     </>
   );

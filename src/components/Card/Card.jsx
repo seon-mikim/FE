@@ -1,19 +1,20 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const Card = () => {
-  const p1 = "/p1.jpg";
+const Card = ({ id, name, price, img, totalStock, productData }) => {
   const soldout = "/soldout.png";
   return (
-    <ItemListBox to="/productdetailpage">
+    <ItemListBox to={`/product/${id}`} state={{ data: productData }}>
       <ThumbnailDiv>
-        <ThumbnailImg src={p1} alt="" />
+        <ThumbnailImg src={img[0]} alt="" />
       </ThumbnailDiv>
-      <Title>Denim Shirt Jacket</Title>
-      <Price>119,000원</Price>
-      <SoldOut>
-        <img src={soldout} alt="" />
-      </SoldOut>
+      <Title>{name}</Title>
+      <Price>{price.toLocaleString()}원</Price>
+      {totalStock === 0 && (
+        <SoldOut>
+          <img src={soldout} alt="" />
+        </SoldOut>
+      )}
     </ItemListBox>
   );
 };
@@ -25,6 +26,7 @@ const ItemListBox = styled(Link)`
   flex-direction: column;
   align-items: center;
   width: 90%;
+
   margin-bottom: 70px;
   &:visited,
   &:link {

@@ -3,16 +3,87 @@ import "./detail.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const ProductDetailPage = () => {
-  const p1 = "/p1.jpg";
-  const p2 = "/p2.jpg";
   const soldout = "/soldout.png";
   const cntUp = "/up.gif";
   const cntDown = "/down.gif";
-  const deleteItem = "/x.gif";
+  const deleteImg = "/x.gif";
 
-  const productImg = [p1, p2];
+  const { data: productData } = useLocation().state;
+
+  const [isInitial, setIsInitial] = useState(true);
+  const [productCount, setProductCount] = useState(1);
+  const [option, setOption] = useState("");
+  const [deleteOption, setDeleteOption] = useState("");
+// 버튼 background 이미지로 변경
+  const handleUpButton = (e) => {
+    console.log(e.target.value);
+    switch (e.target.value) {
+      case "s":
+        productData.buySize.s++;
+        break;
+      case "m":
+        productData.buySize.m++;
+        break;
+      case "l":
+        productData.buySize.l++;
+        break;
+    }
+  };
+  const handleDownButton = () => {
+    switch (e.target.value) {
+      case "s":
+        productData.buySize.s--;
+        break;
+      case "m":
+        productData.buySize.m--;
+        break;
+      case "l":
+        productData.buySize.l--;
+        break;
+    }
+  };
+  const changeQuantity = () => {};
+
+  const deleteItem = (e) => {
+    setDeleteOption(e.target.value);
+    switch (e.target.value) {
+      case "s":
+        productData.buySize.s = 0;
+        break;
+      case "m":
+        productData.buySize.m = 0;
+        break;
+      case "l":
+        productData.buySize.l = 0;
+        break;
+    }
+    console.log(productData.buySize);
+  };
+
+  const handleSelect = (e) => {
+    if (isInitial) setIsInitial(false);
+    setOption(e.target.value);
+    switch (e.target.value) {
+      case "s":
+        productData.buySize.s++;
+        break;
+      case "m":
+        productData.buySize.m++;
+        break;
+      case "l":
+        productData.buySize.l++;
+        break;
+    }
+    console.log(productData.buySize);
+  };
+
+  useEffect(() => {
+    setOption("");
+  }, [productData]);
 
   const settings = {
     dots: true,
@@ -23,65 +94,156 @@ const ProductDetailPage = () => {
     slidesToScroll: 1,
   };
 
+  const renderImg = (data) => {
+    return (
+      <div key={Math.random()}>
+        <img src={data} alt="" />
+      </div>
+    );
+  };
+
   return (
     <>
+      <div>{productData.buySize.s}</div>
       <Section>
-        {/* <div className="img-area">
-          <div className="img-div">
-            <img src={p1} alt="" />
-          </div>
-        </div> */}
         <div className="img-area">
-          <ProductImg default={productImg}>
+          <ProductImg default={productData.img}>
             <div>
-              <Slider {...settings}>
-                <div>
-                  <img src={productImg[0]} alt="" />
-                </div>
-                <div>
-                  <img src={productImg[1]} alt="" />
-                </div>
-              </Slider>
+              <Slider {...settings}>{productData.img.map(renderImg)}</Slider>
             </div>
           </ProductImg>
         </div>
         <div className="info-area">
           <div className="title">
-            Denim Shirt Jacket
+            {productData.name}
             <div className="sold-out">
               <img src={soldout} alt="" />
             </div>
           </div>
-          <div className="price">119,000원</div>
+          <div className="price">{productData.price.toLocaleString()}원</div>
 
-          <div className="tr">
-            <div className="th">사이즈</div>
-            <div className="td">
-              <select className="option">
-                <option value="">- [필수] 옵션을 선택해 주세요 -</option>
-                <option value="s">S</option>
-                <option value="m">M</option>
-                <option value="l">L</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="option-selected">
-            <p>
-              Denim Shirt Jacket
-              <br />-<span>M</span>
-            </p>
-            <div className="input-cnt">
-              <input type="number" />
-              <div className="button-img">
-                <img src={cntUp} alt="" />
-                <img src={cntDown} alt="" />
+          {productData?.buySize && (
+            <div className="tr">
+              <div className="th">사이즈</div>
+              <div className="td">
+                <select className="option" onChange={handleSelect}>
+                  <option key="" value="" disabled={isInitial ? false : true}>
+                    - [필수] 옵션을 선택해 주세요 -
+                  </option>
+                  <option key="s" value="s">
+                    S
+                  </option>
+                  <option key="m" value="m">
+                    M
+                  </option>
+                  <option key="l" value="l">
+                    L
+                  </option>
+                </select>
               </div>
             </div>
-            <div>
-              <img src={deleteItem} alt="" />
-            </div>
-            <div>99,000원</div>
+          )}
+
+          <div className="option-selected-area">
+            {productData.buySize.s > 0 && (
+              <div className="option-selected">
+                <p>
+                  {productData.name}
+                  <br />-<span>S</span>
+                </p>
+                <div className="input-cnt">
+                  <input
+                    type="number"
+                    value={productData.buySize.s}
+                    onChange={changeQuantity}
+                  />
+                  <div className="button-img">
+                    <button className="cntButton" value="s">
+                      <img src={cntUp} alt="" onClick={handleUpButton} />
+                    </button>
+                    <CountButton
+                      value="s"
+                      onClick={handleDownButton}
+                      disabled={productCount === 1 ? true : false}
+                    >
+                      <img src={cntDown} alt="" onClick={handleDownButton} />
+                    </CountButton>
+                  </div>
+                </div>
+                <button
+                  className="delete-option"
+                  onClick={deleteItem}
+                  value="s"
+                />
+                <div>{productData.price.toLocaleString()}원</div>
+              </div>
+            )}
+
+            {productData.buySize.m > 0 && (
+              <div className="option-selected">
+                <p>
+                  {productData.name}
+                  <br />-<span>M</span>
+                </p>
+                <div className="input-cnt">
+                  <input
+                    type="number"
+                    value={productData.buySize.m}
+                    onChange={changeQuantity}
+                  />
+                  <div className="button-img">
+                    <button className="cntButton">
+                      <img src={cntUp} alt="" onClick={handleUpButton} />
+                    </button>
+                    <CountButton
+                      value={productCount}
+                      disabled={productCount === 1 ? true : false}
+                    >
+                      <img src={cntDown} alt="" onClick={handleDownButton} />
+                    </CountButton>
+                  </div>
+                </div>
+                <button
+                  className="delete-option"
+                  onClick={deleteItem}
+                  value="m"
+                />
+                <div>{productData.price.toLocaleString()}원</div>
+              </div>
+            )}
+
+            {productData.buySize.l > 0 && (
+              <div className="option-selected">
+                <p>
+                  {productData.name}
+                  <br />-<span>L</span>
+                </p>
+                <div className="input-cnt">
+                  <input
+                    type="number"
+                    value={productData.buySize.l}
+                    onChange={changeQuantity}
+                  />
+                  <div className="button-img">
+                    <button className="cntButton">
+                      <img src={cntUp} alt="" onClick={handleUpButton} />
+                    </button>
+                    <CountButton
+                      value={productCount}
+                      disabled={productCount === 1 ? true : false}
+                    >
+                      <img src={cntDown} alt="" onClick={handleDownButton} />
+                    </CountButton>
+                  </div>
+                </div>
+                <button
+                  className="delete-option"
+                  onClick={deleteItem}
+                  value="l"
+                />
+                <div>{productData.price.toLocaleString()}원</div>
+              </div>
+            )}
           </div>
 
           <div className="buy-button">구매하기</div>
@@ -107,6 +269,8 @@ const Section = styled.div`
 
 const ProductImg = styled.div`
   width: 60%;
+  max-height: 464px;
+  position: relative;
   border: 1px solid #ececec;
   img {
     width: 100%;
@@ -130,23 +294,23 @@ const ProductImg = styled.div`
   .slick-dots {
     display: flex !important;
     justify-content: flex-start;
-    position: relative;
-    bottom: -20px;
-    @media screen and (max-width: 1370px) {
-      bottom: -40px;
-    }
-    @media screen and (max-width: 1330px) {
-      bottom: -60px;
-    }
-    @media screen and (max-width: 1290px) {
-      bottom: -80px;
-    }
-    @media screen and (max-width: 1250px) {
-      bottom: -100px;
-    }
-    @media screen and (max-width: 768px) {
-      bottom: -40px;
-    }
+    position: absolute;
+    bottom: -30px;
+    // @media screen and (max-width: 1370px) {
+    //   bottom: -40px;
+    // }
+    // @media screen and (max-width: 1330px) {
+    //   bottom: -60px;
+    // }
+    // @media screen and (max-width: 1290px) {
+    //   bottom: -80px;
+    // }
+    // @media screen and (max-width: 1250px) {
+    //   bottom: -100px;
+    // }
+    // @media screen and (max-width: 768px) {
+    //   bottom: -40px;
+    // }
   }
 
   .slick-dots li {
@@ -184,4 +348,13 @@ const ProductImg = styled.div`
   .slick-dots li.slick-active button:before {
     opacity: 0.95;
   }
+`;
+
+const CountButton = styled.button`
+  border: none;
+  background: none;
+  width: 20px;
+  height: 10px;
+  display: flex;
+  justify-content: center;
 `;
