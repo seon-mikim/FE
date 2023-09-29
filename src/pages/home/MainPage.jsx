@@ -28,7 +28,7 @@ const MainPage = () => {
       price: 95200,
       img: ["/p2.jpg"],
       buyQuantity: 0,
-      totalStock: 10,
+      totalStock: 7,
     },
     {
       id: "P00000KQ",

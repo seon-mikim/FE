@@ -8,82 +8,145 @@ import { useLocation } from "react-router-dom";
 
 const ProductDetailPage = () => {
   const soldout = "/soldout.png";
-  const cntUp = "/up.gif";
-  const cntDown = "/down.gif";
-  const deleteImg = "/x.gif";
 
   const { data: productData } = useLocation().state;
 
   const [isInitial, setIsInitial] = useState(true);
-  const [productCount, setProductCount] = useState(1);
-  const [option, setOption] = useState("");
-  const [deleteOption, setDeleteOption] = useState("");
-// 버튼 background 이미지로 변경
+  const [size, setSize] = useState({ s: 0, m: 0, l: 0 });
+  const [nonSize, setNonSize] = useState(1);
+
   const handleUpButton = (e) => {
-    console.log(e.target.value);
     switch (e.target.value) {
       case "s":
-        productData.buySize.s++;
+        setSize((prev) => {
+          return { ...prev, s: prev.s + 1 };
+        });
         break;
       case "m":
-        productData.buySize.m++;
+        setSize((prev) => {
+          return { ...prev, m: prev.m + 1 };
+        });
         break;
       case "l":
-        productData.buySize.l++;
+        setSize((prev) => {
+          return { ...prev, l: prev.l + 1 };
+        });
+        break;
+      case "non":
+        setNonSize((prev) => prev + 1);
         break;
     }
   };
-  const handleDownButton = () => {
+  const handleDownButton = (e) => {
     switch (e.target.value) {
       case "s":
-        productData.buySize.s--;
+        setSize((prev) => {
+          return { ...prev, s: prev.s - 1 };
+        });
         break;
       case "m":
-        productData.buySize.m--;
+        setSize((prev) => {
+          return { ...prev, m: prev.m - 1 };
+        });
         break;
       case "l":
-        productData.buySize.l--;
+        setSize((prev) => {
+          return { ...prev, l: prev.l - 1 };
+        });
+        break;
+      case "non":
+        setNonSize((prev) => prev - 1);
         break;
     }
   };
-  const changeQuantity = () => {};
+  const changeQuantity = (e) => {
+    switch (e.target.id) {
+      case "s":
+        setSize((prev) => {
+          return { ...prev, s: Number(e.target.value) };
+        });
+        break;
+      case "m":
+        setSize((prev) => {
+          return { ...prev, m: Number(e.target.value) };
+        });
+        break;
+      case "l":
+        setSize((prev) => {
+          return { ...prev, l: Number(e.target.value) };
+        });
+        break;
+      case "non":
+        setNonSize(Number(e.target.value));
+        break;
+    }
+  };
 
   const deleteItem = (e) => {
-    setDeleteOption(e.target.value);
     switch (e.target.value) {
       case "s":
-        productData.buySize.s = 0;
+        setSize((prev) => {
+          return { ...prev, s: 0 };
+        });
+
         break;
       case "m":
-        productData.buySize.m = 0;
+        setSize((prev) => {
+          return { ...prev, m: 0 };
+        });
+
         break;
       case "l":
-        productData.buySize.l = 0;
+        setSize((prev) => {
+          return { ...prev, l: 0 };
+        });
         break;
     }
-    console.log(productData.buySize);
   };
 
   const handleSelect = (e) => {
     if (isInitial) setIsInitial(false);
-    setOption(e.target.value);
+
     switch (e.target.value) {
       case "s":
-        productData.buySize.s++;
+        setSize((prev) => {
+          return { ...prev, s: prev.s + 1 };
+        });
+
         break;
       case "m":
-        productData.buySize.m++;
+        setSize((prev) => {
+          return { ...prev, m: prev.m + 1 };
+        });
+
         break;
       case "l":
-        productData.buySize.l++;
+        setSize((prev) => {
+          return { ...prev, l: prev.l + 1 };
+        });
         break;
     }
-    console.log(productData.buySize);
+  };
+
+  const setBuySize = () => {
+    if (productData.buySize) {
+      productData.buySize = size;
+      productData.buyQuantity = size.s + size.m + size.l;
+    } else {
+      productData.buyQuantity = nonSize;
+    }
   };
 
   useEffect(() => {
-    setOption("");
-  }, [productData]);
+    setBuySize();
+    console.log("size", size);
+    console.log("buySize", productData.buySize);
+    console.log("productData", productData);
+    console.log("nonSize", nonSize);
+    if (productData.totalStock === 0) {
+      setNonSize(0);
+    }
+  }, [setBuySize, size, productData]);
 
   const settings = {
     dots: true,
@@ -104,7 +167,6 @@ const ProductDetailPage = () => {
 
   return (
     <>
-      <div>{productData.buySize.s}</div>
       <Section>
         <div className="img-area">
           <ProductImg default={productData.img}>
@@ -116,9 +178,11 @@ const ProductDetailPage = () => {
         <div className="info-area">
           <div className="title">
             {productData.name}
-            <div className="sold-out">
-              <img src={soldout} alt="" />
-            </div>
+            {productData.totalStock === 0 && (
+              <div className="sold-out">
+                <img src={soldout} alt="" />
+              </div>
+            )}
           </div>
           <div className="price">{productData.price.toLocaleString()}원</div>
 
@@ -130,14 +194,26 @@ const ProductDetailPage = () => {
                   <option key="" value="" disabled={isInitial ? false : true}>
                     - [필수] 옵션을 선택해 주세요 -
                   </option>
-                  <option key="s" value="s">
-                    S
+                  <option
+                    key="s"
+                    value="s"
+                    disabled={productData.stock.s === 0 ? true : false}
+                  >
+                    S {productData.stock.s === 0 && <span> [품절]</span>}
                   </option>
-                  <option key="m" value="m">
-                    M
+                  <option
+                    key="m"
+                    value="m"
+                    disabled={productData.stock.m === 0 ? true : false}
+                  >
+                    M {productData.stock.m === 0 && <span> [품절]</span>}
                   </option>
-                  <option key="l" value="l">
-                    L
+                  <option
+                    key="l"
+                    value="l"
+                    disabled={productData.stock.l === 0 ? true : false}
+                  >
+                    L {productData.stock.l === 0 && <span> [품절]</span>}
                   </option>
                 </select>
               </div>
@@ -145,7 +221,38 @@ const ProductDetailPage = () => {
           )}
 
           <div className="option-selected-area">
-            {productData.buySize.s > 0 && (
+            {!productData.buySize && (
+              <div className="option-selected">
+                <p>{productData.name}</p>
+                <div className="input-cnt">
+                  <input
+                    id="non"
+                    type="number"
+                    value={nonSize}
+                    onChange={changeQuantity}
+                  />
+                  <div className="button-img">
+                    <button
+                      className="cntButton-up"
+                      value="non"
+                      onClick={handleUpButton}
+                    />
+                    <button
+                      className="cntButton-down"
+                      value="non"
+                      onClick={handleDownButton}
+                      disabled={nonSize === 1 ? true : false}
+                    />
+                  </div>
+                </div>
+
+                <div className="option-price">
+                  {(productData.price * nonSize).toLocaleString()}원
+                </div>
+              </div>
+            )}
+
+            {size.s > 0 && (
               <div className="option-selected">
                 <p>
                   {productData.name}
@@ -153,21 +260,23 @@ const ProductDetailPage = () => {
                 </p>
                 <div className="input-cnt">
                   <input
+                    id="s"
                     type="number"
-                    value={productData.buySize.s}
+                    value={size.s}
                     onChange={changeQuantity}
                   />
                   <div className="button-img">
-                    <button className="cntButton" value="s">
-                      <img src={cntUp} alt="" onClick={handleUpButton} />
-                    </button>
-                    <CountButton
+                    <button
+                      className="cntButton-up"
+                      value="s"
+                      onClick={handleUpButton}
+                    />
+                    <button
+                      className="cntButton-down"
                       value="s"
                       onClick={handleDownButton}
-                      disabled={productCount === 1 ? true : false}
-                    >
-                      <img src={cntDown} alt="" onClick={handleDownButton} />
-                    </CountButton>
+                      disabled={size.s === 1 ? true : false}
+                    />
                   </div>
                 </div>
                 <button
@@ -175,11 +284,13 @@ const ProductDetailPage = () => {
                   onClick={deleteItem}
                   value="s"
                 />
-                <div>{productData.price.toLocaleString()}원</div>
+                <div className="option-price">
+                  {(productData.price * size.s).toLocaleString()}원
+                </div>
               </div>
             )}
 
-            {productData.buySize.m > 0 && (
+            {size.m > 0 && (
               <div className="option-selected">
                 <p>
                   {productData.name}
@@ -187,20 +298,23 @@ const ProductDetailPage = () => {
                 </p>
                 <div className="input-cnt">
                   <input
+                    id="m"
                     type="number"
-                    value={productData.buySize.m}
+                    value={size.m}
                     onChange={changeQuantity}
                   />
                   <div className="button-img">
-                    <button className="cntButton">
-                      <img src={cntUp} alt="" onClick={handleUpButton} />
-                    </button>
-                    <CountButton
-                      value={productCount}
-                      disabled={productCount === 1 ? true : false}
-                    >
-                      <img src={cntDown} alt="" onClick={handleDownButton} />
-                    </CountButton>
+                    <button
+                      className="cntButton-up"
+                      value="m"
+                      onClick={handleUpButton}
+                    />
+                    <button
+                      className="cntButton-down"
+                      value="m"
+                      onClick={handleDownButton}
+                      disabled={size.m === 1 ? true : false}
+                    />
                   </div>
                 </div>
                 <button
@@ -208,11 +322,13 @@ const ProductDetailPage = () => {
                   onClick={deleteItem}
                   value="m"
                 />
-                <div>{productData.price.toLocaleString()}원</div>
+                <div className="option-price">
+                  {(productData.price * size.m).toLocaleString()}원
+                </div>
               </div>
             )}
 
-            {productData.buySize.l > 0 && (
+            {size.l > 0 && (
               <div className="option-selected">
                 <p>
                   {productData.name}
@@ -220,20 +336,23 @@ const ProductDetailPage = () => {
                 </p>
                 <div className="input-cnt">
                   <input
+                    id="l"
                     type="number"
-                    value={productData.buySize.l}
+                    value={size.l}
                     onChange={changeQuantity}
                   />
                   <div className="button-img">
-                    <button className="cntButton">
-                      <img src={cntUp} alt="" onClick={handleUpButton} />
-                    </button>
-                    <CountButton
-                      value={productCount}
-                      disabled={productCount === 1 ? true : false}
-                    >
-                      <img src={cntDown} alt="" onClick={handleDownButton} />
-                    </CountButton>
+                    <button
+                      className="cntButton-up"
+                      value="l"
+                      onClick={handleUpButton}
+                    />
+                    <button
+                      className="cntButton-down"
+                      value="l"
+                      onClick={handleDownButton}
+                      disabled={size.l === 1 ? true : false}
+                    />
                   </div>
                 </div>
                 <button
@@ -241,16 +360,43 @@ const ProductDetailPage = () => {
                   onClick={deleteItem}
                   value="l"
                 />
-                <div>{productData.price.toLocaleString()}원</div>
+                <div className="option-price">
+                  {(productData.price * size.l).toLocaleString()}원
+                </div>
               </div>
             )}
           </div>
 
-          <div className="buy-button">구매하기</div>
-          <div className="btn-area-low">
-            <div className="btn cart">장바구니</div>
-            <div className="btn like">관심상품</div>
+          <div className="total-price">
+            TOTAL :{" "}
+            {productData.buySize && (
+              <span>
+                {(
+                  productData.price *
+                  (size.s + size.m + size.l)
+                ).toLocaleString()}
+                원
+              </span>
+            )}
+            {!productData.buySize && (
+              <span>{(productData.price * nonSize).toLocaleString()}원</span>
+            )}
           </div>
+          {productData.totalStock != 0 && (
+            <>
+              <div className="buy-button">구매하기</div>
+              <div className="btn-area-low">
+                <div className="btn cart">장바구니</div>
+                <div className="btn like">관심상품</div>
+              </div>
+            </>
+          )}
+          {productData.totalStock === 0 && (
+            <div className="btn-area-low">
+              <div className="btn cart">품절</div>
+              <div className="btn like">관심상품</div>
+            </div>
+          )}
         </div>
       </Section>
     </>
@@ -348,13 +494,4 @@ const ProductImg = styled.div`
   .slick-dots li.slick-active button:before {
     opacity: 0.95;
   }
-`;
-
-const CountButton = styled.button`
-  border: none;
-  background: none;
-  width: 20px;
-  height: 10px;
-  display: flex;
-  justify-content: center;
 `;

@@ -17,7 +17,7 @@
 }
 .header-inner ul {
   display: flex;
-  margin-left: 6.5rem;
+  margin-left: 7.8rem;
 }
 
 .log {
@@ -29,10 +29,10 @@
   margin-right: 5rem;
   cursor: pointer;
 }
-.log p:hover{
+.log p:hover {
   color: white;
 }
-.log span{
+.log span {
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -89,6 +89,6 @@
   letter-spacing: 0.08em;
 }
 
-.user-button{
+.user-button {
   margin-left: 1.5rem;
 }
