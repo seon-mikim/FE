@@ -7,7 +7,7 @@ import * as S from './style';
 import { BENIFIT_ITEM_DATA } from '../../../constants/benfitItemData';
 import BenefitItem from './BenfitItem';
 
-const UserProfileCard = ({ profileData }) => {
+const ProfileCard = ({ profileData }) => {
   const checkedProfileImag = profileData.profile_image
     ? profileData.profile_image
     : DefaultUserImg;
@@ -36,4 +36,4 @@ const UserProfileCard = ({ profileData }) => {
   );
 };
 
-export default UserProfileCard;
+export default ProfileCard;

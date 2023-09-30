@@ -1,7 +1,9 @@
 
 const UserSaleItemsContent = () => {
 	return (
-		<div>UserSaleItemsContent</div>
+		<div>
+			
+		</div>
 	)
 }
 

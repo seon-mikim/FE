@@ -1,19 +1,10 @@
-import styled from 'styled-components';
+import UserDefalutCard from "./UserDefalutCard";
+import UserCartCard from '../MypageCard/UserCartCard/UserCartCard'
+import EmptyCartCard from '../MypageCard/UserCartCard/EmptyCartCard'
+import ProfileCard from "./UserProfileCard/ProfileCard";
+import SalesCard from "./UseSalesCard/SalesCard";
 
-const MypageCard = (Item) => {
-  return ({ ...props }) => {
-    return (
-      <MypageList>
-        <Item {...props} />
-      </MypageList>
-    );
-  };
-};
-
-export default MypageCard;
-
-
-
-const MypageList = styled.ul`
-  width: 100%;
-`;
+export const UserFullCartCard = UserDefalutCard(UserCartCard)
+export const UserEmptyCartCard = UserDefalutCard(EmptyCartCard)
+export const UserProfileCard = UserDefalutCard(ProfileCard)
+export const UserSalesCard = UserDefalutCard(SalesCard)

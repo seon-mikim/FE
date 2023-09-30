@@ -1,19 +1,13 @@
-import MypageCard from '../MypageCard';
-import {
-  UserEmptyCartCard,
-  UserExistsCartCard,
-} from '../MypageCard/UserCartCard';
+
+import { UserFullCartCard,UserEmptyCartCard, } from '../MypageCard';
 
 const UserCartContent = () => {
-  const EmptyCartCard = MypageCard(UserEmptyCartCard);
-  const CartCard = MypageCard(UserExistsCartCard);
-  const userCartData = []
-if(userCartData.length === 0 ) return <EmptyCartCard/>
-  return (
-  
-      <CartCard />
 
-  )
+	const userCartData = []
+	
+	if (userCartData.length === 0) return <UserEmptyCartCard />
+  
+	return <UserFullCartCard />
 };
 
 export default UserCartContent;

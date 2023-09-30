@@ -21,11 +21,14 @@ export default EmptyCartCard;
 
 const EmptyCartWrap = styled(Wrap)`
   display: flex;
-  margin: 80px auto;
+  gap: 20px;
+  margin:10px auto;
+  padding: 80px 0;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 20px;
+  border-top: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
   p {
     color: #707070;
   }

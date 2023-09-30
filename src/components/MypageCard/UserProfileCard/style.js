@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Wrap from '../../ui/Wrap/Wrap';
 import Span from '../../ui/Span/Span';
 
-export const CardWrapper = styled.li`
+export const CardWrapper = styled.div`
   display: flex;
   flex: 1;
   gap: 30px;

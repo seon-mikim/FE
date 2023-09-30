@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 
-const UserDefalutCartCard = (Content) => {
+const UserDefalutCard = (Content) => {
   return ({ ...props }) => {
     return (
       <CardItemWrap>
@@ -11,10 +11,9 @@ const UserDefalutCartCard = (Content) => {
   };
 };
 
-export default UserDefalutCartCard;
+export default UserDefalutCard;
 
 const CardItemWrap = styled.li`
   width: 100%;
-  border-top: 1px solid #e2e2e2;
-  border-bottom: 1px solid #e2e2e2;
+
 `;
