@@ -13,4 +13,7 @@ const StMain = styled.main`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  @media screen and (min-width: 1024px) {
+    width: 100%;
+  }
 `;
