@@ -48,7 +48,7 @@ const Routers = createBrowserRouter([
             element: <SettingPage/>
           },
           {
-            path: 'selas',
+            path: 'sales',
             element: <MySalesPage/>
           },
         ]
