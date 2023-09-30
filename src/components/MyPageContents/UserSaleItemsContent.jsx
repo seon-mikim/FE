@@ -1,10 +1,9 @@
+import { UserEmptySalesCard, UserFullSalesCard } from "../MypageCard"
 
 const UserSaleItemsContent = () => {
-	return (
-		<div>
-			
-		</div>
-	)
+	const salesProductData = []
+	if(salesProductData.length === 0) return <UserEmptySalesCard/>
+	return <UserFullSalesCard/>
 }
 
 export default UserSaleItemsContent

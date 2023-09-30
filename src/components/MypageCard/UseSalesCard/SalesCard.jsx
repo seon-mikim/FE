@@ -1,7 +1,9 @@
 
 const SalesCard = () => {
 	return (
-		<div>SalesCard</div>
+		<div>
+			
+		</div>
 	)
 }
 
