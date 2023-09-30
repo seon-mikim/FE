@@ -11,6 +11,7 @@
 .sub-list-select {
   display: flex;
   font-size: 14px;
+  cursor: pointer;
 }
 .sub-list-btn {
   border: 1px solid #e1e1e1;
@@ -18,6 +19,25 @@
   padding: 12px 20px;
   margin: 0 3px 5px 3px;
   line-height: 14px;
+  background-color: white;
+}
+.sub-list-btn:hover {
+  color: white;
+  background-color: black;
+  border: 1px solid black;
+  padding: 12px 20px;
+  margin: 0 3px 5px 3px;
+  line-height: 14px;
+  cursor: pointer;
+}
+.sub-list-btn-selected {
+  color: white;
+  background-color: black;
+  border: 1px solid black;
+  padding: 12px 20px;
+  margin: 0 3px 5px 3px;
+  line-height: 14px;
+  cursor: pointer;
 }
 
 .pagination {
@@ -25,9 +45,13 @@
   justify-content: center;
 }
 .pagination ol {
+  display: flex;
   font-weight: bold;
   font-size: 12px;
   color: #939393;
+}
+.pagination li {
+  height: 32px;
 }
 .page-first {
   display: inline-block;
@@ -43,11 +67,60 @@
   text-align: center;
 }
 
-.num-selected {
+.selected {
+  border: none;
+  background: white;
+  width: 100%;
+  height: 2rem;
   border-bottom: 3px solid black;
-  padding: 10px 0 7px 0;
   color: black;
+  cursor: pointer;
+  line-height: 2.3;
 }
 .num {
-  padding: 10px 0;
+  border: none;
+  background: white;
+  color: #9393af;
+  width: 100%;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.first-page {
+  border: none;
+  border: 1px solid #d7d5d5;
+  width: 34px;
+  background-image: url("/first.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+.prev-page {
+  border: none;
+  border-top: 1px solid #d7d5d5;
+  border-bottom: 1px solid #d7d5d5;
+  width: 34px;
+  background-image: url("/prev.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+.next-page {
+  border: none;
+  border-top: 1px solid #d7d5d5;
+  border-bottom: 1px solid #d7d5d5;
+  width: 34px;
+  background-image: url("/next.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+.end-page {
+  border: none;
+  border: 1px solid #d7d5d5;
+  width: 34px;
+  background-image: url("/end.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
 }
