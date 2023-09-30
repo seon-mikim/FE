@@ -7,8 +7,13 @@ import {
 const UserCartContent = () => {
   const EmptyCartCard = MypageCard(UserEmptyCartCard);
   const CartCard = MypageCard(UserExistsCartCard);
-  const cardData = [];
-  return <>{cardData.length !== 0 ? <CartCard /> : <EmptyCartCard />}</>;
+  const userCartData = []
+if(userCartData.length === 0 ) return <EmptyCartCard/>
+  return (
+  
+      <CartCard />
+
+  )
 };
 
 export default UserCartContent;

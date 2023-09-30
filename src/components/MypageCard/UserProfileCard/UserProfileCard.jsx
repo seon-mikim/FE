@@ -4,7 +4,8 @@ import Image from '../../ui/Image/Image';
 import Text from '../../ui/Text/Text';
 import Wrap from '../../ui/Wrap/Wrap';
 import * as S from './style';
-import Span from '../../ui/Span/Span';
+import { BENIFIT_ITEM_DATA } from '../../../constants/benfitItemData';
+import BenefitItem from './BenfitItem';
 
 const UserProfileCard = ({ profileData }) => {
   const checkedProfileImag = profileData.profile_image
@@ -26,20 +27,11 @@ const UserProfileCard = ({ profileData }) => {
           </S.Button>
         </Wrap>
       </S.UserInfo>
-      <S.BenfitWrap>
-        <S.BenfitItemWrap>
-          <Span text="쿠폰" />
-          <Text text="1" />
-        </S.BenfitItemWrap>
-        <S.BenfitItemWrap>
-          <Span text="마일리지" />
-          <Text text="1,000" />
-        </S.BenfitItemWrap>
-        <S.BenfitItemWrap>
-          <Span text="페이머니" />
-          <Text text="10,000" />
-        </S.BenfitItemWrap>
-      </S.BenfitWrap>
+      <S.BenefitWrap>
+        {BENIFIT_ITEM_DATA.map((benefitItemData, index) => (
+          <BenefitItem benefitItemData={benefitItemData} key={index} />
+        ))}
+      </S.BenefitWrap>
     </S.CardWrapper>
   );
 };
