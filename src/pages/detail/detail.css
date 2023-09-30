@@ -1,0 +1,89 @@
+.img-div {
+  width: 31rem;
+  height: 31rem;
+  border: 1px solid #ececec;
+}
+.img-div img {
+  width: 100%;
+}
+.title {
+  display: flex;
+  font-size: 21px;
+  margin-bottom: 22px;
+  padding: 50px 0 0;
+}
+.img-area {
+  width: 60%;
+  min-width: 600px;
+  display: flex;
+  justify-content: center;
+}
+.price {
+  font-size: 28px;
+  color: #222;
+  font-weight: bold;
+}
+.info-area {
+  width: 35%;
+  min-width: 438px;
+  padding-left: 5%;
+}
+.buy-button {
+  color: white;
+  background-color: black;
+  box-shadow: 5px 5px 16px 0 rgba(0, 0, 0, 0.3);
+  padding: 22px 35px 23px;
+  font-weight: bold;
+  font-size: 25px;
+  letter-spacing: 3px;
+  text-align: center;
+}
+.btn-area-low {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.btn {
+  display: inline-block;
+  width: 40%;
+  font-weight: 400;
+  margin: 4px 0 0 0;
+  background-color: white;
+  color: #222222;
+  border: 1px solid #ccc;
+  padding: 15px 20px;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 1rem;
+}
+.option {
+  border: 1px solid #d5d5d5;
+  padding: 0.3rem;
+  width: 100%;
+}
+.tr {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #ececec;
+  border-bottom: 1px solid #ececec;
+  margin: 1rem 0;
+  padding: 2rem 0;
+  font-size: 13px;
+  font-weight: 400;
+  width: 100%;
+}
+.th {
+  padding-right: 3rem;
+}
+.td {
+  width: 80%;
+}
+.td ul {
+  padding: 0.5rem 0.5rem;
+  line-height: 150%;
+  position: relative;
+}
+
+.sold-out {
+  margin-left: 0.5rem;
+}
