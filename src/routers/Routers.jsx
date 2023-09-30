@@ -9,6 +9,7 @@ import MyPage from "../pages/my";
 import SettingPage from "../pages/my/sub/SettingPage";
 import UserInfoPage from "../pages/my/sub/UserInfoPage";
 import MySalesPage from "../pages/my/sub/MySalesPage";
+import OrderPage from "../pages/my/sub/OrderPage";
 
 const Routers = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const Routers = createBrowserRouter([
           {
             path: 'sales',
             element: <MySalesPage/>
+          },
+          {
+            path: 'orders',
+            element: <OrderPage/>
           },
         ]
       },
