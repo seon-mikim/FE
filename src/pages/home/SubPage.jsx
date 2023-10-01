@@ -139,9 +139,12 @@ const SubPage = () => {
   };
   const changeCategory = (e) => {
     setCategory(e.target.value);
+    setPage(1);
   };
 
-  const maxPage = sortByCategory(category).length / limit;
+  //물품 개수가 limit 보다 작을 경우 올림
+  const maxPage = Math.ceil(sortByCategory(category).length / limit);
+  console.log(maxPage);
 
   const sliceData = (data) => {
     if (data) {
