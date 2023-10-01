@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import "./subpage.css";
 import CardLi from "../../components/Card/CardLi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const SubPage = () => {
   const [page, setPage] = useState(1);
   const limit = 4;
@@ -27,6 +27,7 @@ const SubPage = () => {
         l: 4,
       },
       totalStock: 15,
+      category: "TOPS & T-SHIRTS",
     },
     {
       id: "P00000KB",
@@ -35,6 +36,7 @@ const SubPage = () => {
       img: ["/p2.jpg"],
       buyQuantity: 0,
       totalStock: 10,
+      category: "HOODIES & SWEATSHIRTS",
     },
     {
       id: "P00000KC",
@@ -53,6 +55,7 @@ const SubPage = () => {
         l: 4,
       },
       totalStock: 15,
+      category: "PANTS",
     },
 
     {
@@ -62,6 +65,7 @@ const SubPage = () => {
       img: ["/p4.jpg", "/p4-2.png"],
       buyQuantity: 0,
       totalStock: 3,
+      category: "BUNDLE",
     },
 
     {
@@ -81,6 +85,7 @@ const SubPage = () => {
         l: 4,
       },
       totalStock: 15,
+      category: "TOPS & T-SHIRTS",
     },
     {
       id: "P00000KF",
@@ -89,6 +94,7 @@ const SubPage = () => {
       img: ["/p2.jpg"],
       buyQuantity: 0,
       totalStock: 10,
+      category: "TOPS & T-SHIRTS",
     },
     {
       id: "P00000KG",
@@ -107,6 +113,7 @@ const SubPage = () => {
         l: 4,
       },
       totalStock: 15,
+      category: "PANTS",
     },
 
     {
@@ -116,10 +123,25 @@ const SubPage = () => {
       img: ["/p4-2.png", "/p4.jpg"],
       buyQuantity: 0,
       totalStock: 3,
+      category: "BUNDLE",
     },
   ];
 
-  const maxPage = productList.length / limit;
+  const sortByCategory = (value) => {
+    if (category === "") {
+      return productList;
+    } else {
+      const fitered = productList.filter((product) => {
+        return product.category === value;
+      });
+      return fitered;
+    }
+  };
+  const changeCategory = (e) => {
+    setCategory(e.target.value);
+  };
+
+  const maxPage = sortByCategory(category).length / limit;
 
   const sliceData = (data) => {
     if (data) {
@@ -146,9 +168,6 @@ const SubPage = () => {
         setPage(maxPage);
         break;
     }
-  };
-  const changeCategory = (e) => {
-    setCategory(e.target.value);
   };
 
   const renderCard = (product) => {
@@ -194,6 +213,10 @@ const SubPage = () => {
     }
     return result;
   };
+
+  useEffect(() => {
+    sortByCategory("");
+  }, []);
 
   return (
     <Section>
@@ -242,7 +265,9 @@ const SubPage = () => {
           </button>
         </div>
       </div>
-      <ItemListGrid>{sliceData(productList).map(renderCard)}</ItemListGrid>
+      <ItemListGrid>
+        {sliceData(sortByCategory(category)).map(renderCard)}
+      </ItemListGrid>
       <div className="pagination">
         <button
           className="first-page"
