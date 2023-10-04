@@ -1,8 +1,6 @@
-import styled from "styled-components";
-import "./subpage.css";
 import CardLi from "../../components/Card/CardLi";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import * as S from "./SubPageStyle";
 const Category3 = () => {
   const [page, setPage] = useState(1);
   const limit = 4;
@@ -178,93 +176,78 @@ const Category3 = () => {
     for (let i = 0; i < maxPage; i++) {
       if (i === 0) {
         result.push(
-          <li className="page-first" key="1">
-            <button
+          <S.PaginationLiFirst key="1">
+            <S.PageBtn
               className={page === 1 ? "selected" : "num"}
               value="1"
               onClick={changePage}
             >
               1
-            </button>
-          </li>
+            </S.PageBtn>
+          </S.PaginationLiFirst>
         );
       } else {
         result.push(
-          <li className="page" key={i + 1}>
-            <button
+          <S.PaginationLi key={i + 1}>
+            <S.PageBtn
               className={page === i + 1 ? "selected" : "num"}
               value={i + 1}
               onClick={changePage}
             >
               {i + 1}
-            </button>
-          </li>
+            </S.PageBtn>
+          </S.PaginationLi>
         );
       }
     }
     return result;
   };
 
-
   return (
-    <Section>
-      <div className="sub-title">
-        <div className="sub-list-title">APPAREL</div>
-        <div className="sub-list-select">
-          <Link to={`/category/tops-t-shirts`} className="sub-list-btn">
+    <S.Section>
+      <S.SectionTitle>
+        <S.SectionTitleText>APPAREL</S.SectionTitleText>
+        <S.SectionTitleCategory>
+          <S.StyledLink to={`/category/tops-t-shirts`}>
             TOPS & T-SHIRTS
-          </Link>
-          <Link to={`/category/hoodies-sweatshirts`} className="sub-list-btn">
+          </S.StyledLink>
+          <S.StyledLink to={`/category/hoodies-sweatshirts`}>
             HOODIES & SWEATSHIRTS
-          </Link>
-          <Link to={`/category/pants`} className="sub-list-btn-selected">
+          </S.StyledLink>
+          <S.StyledLinkSelected to={`/category/pants`}>
             PANTS
-          </Link>
-          <Link to={`/category/bundle`} className="sub-list-btn">
-            BUNDLE
-          </Link>
-        </div>
-      </div>
-      <ItemListGrid>{sliceData(sortByCategory()).map(renderCard)}</ItemListGrid>
-      <div className="pagination">
-        <button
-          className="first-page"
+          </S.StyledLinkSelected>
+          <S.StyledLink to={`/category/bundle`}>BUNDLE</S.StyledLink>
+        </S.SectionTitleCategory>
+      </S.SectionTitle>
+      <S.ItemListGrid>
+        {sliceData(sortByCategory()).map(renderCard)}
+      </S.ItemListGrid>
+      <S.Pagination>
+        <S.PageFirst
           value="first"
           onClick={changePagination}
           disabled={page === 1 ? true : false}
-        ></button>
-        <button
-          className="prev-page"
+        ></S.PageFirst>
+        <S.PagePrev
           value="prev"
           onClick={changePagination}
           disabled={page === 1 ? true : false}
-        ></button>
-        <ol>{renderPagination()}</ol>
-        <button
-          className="next-page"
+        ></S.PagePrev>
+        <S.PaginationOl>{renderPagination()}</S.PaginationOl>
+        <S.PageNext
           value="next"
           onClick={changePagination}
           disabled={page === maxPage ? true : false}
-        ></button>
-        <button
-          className="end-page"
+        ></S.PageNext>
+        <S.PageEnd
           value="end"
           onClick={changePagination}
           disabled={page === maxPage ? true : false}
-        ></button>
-      </div>
-    </Section>
+        ></S.PageEnd>
+      </S.Pagination>
+    </S.Section>
   );
 };
 
 export default Category3;
-
-const Section = styled.div`
-  padding: 80px 5% 20px;
-`;
-
-const ItemListGrid = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  padding: 60px 5% 0;
-`;
