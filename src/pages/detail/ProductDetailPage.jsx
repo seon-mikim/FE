@@ -312,22 +312,22 @@ const ProductDetailPage = () => {
                   {productData.name}
                   <br />-<span>L</span>
                 </p>
-                <S.InputBtnImgDiv>
+                <S.InputDiv>
                   <S.InputNumber
                     id="l"
                     type="number"
                     value={size.l}
                     onChange={changeQuantity}
                   />
-                  <div className="button-img">
+                  <S.InputBtnImgDiv>
                     <S.CountUpBtn value="l" onClick={handleUpButton} />
                     <S.CountDownBtn
                       value="l"
                       onClick={handleDownButton}
                       disabled={size.l === 1 ? true : false}
                     />
-                  </div>
-                </S.InputBtnImgDiv>
+                  </S.InputBtnImgDiv>
+                </S.InputDiv>
                 <S.DeleteOptionBtn onClick={deleteItem} value="l" />
                 <S.SelectedOptionPrice>
                   {(productData.price * size.l).toLocaleString()}원
