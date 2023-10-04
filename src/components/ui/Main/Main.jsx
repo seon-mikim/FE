@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const Main = ({ children }) => {
-  return <StMain>{children}</StMain>;
+const Main = ({ children, ...props }) => {
+  return <StMain{...props}>{children}</StMain>;
 };
 
 export default Main;
