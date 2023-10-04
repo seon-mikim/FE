@@ -21,6 +21,9 @@
   line-height: 14px;
   background-color: white;
 }
+.sub-list-btn:link {
+  text-decoration: none;
+}
 .sub-list-btn:hover {
   color: white;
   background-color: black;
@@ -38,6 +41,9 @@
   margin: 0 3px 5px 3px;
   line-height: 14px;
   cursor: pointer;
+}
+.sub-list-btn-selected:link {
+  text-decoration: none;
 }
 
 .pagination {

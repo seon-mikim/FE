@@ -3,12 +3,10 @@ import "./subpage.css";
 import CardLi from "../../components/Card/CardLi";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-const SubPage = () => {
+const Category4 = () => {
   const [page, setPage] = useState(1);
   const limit = 4;
   const offset = (page - 1) * limit;
-
-  const [category, setCategory] = useState("");
 
   const productList = [
     {
@@ -128,25 +126,17 @@ const SubPage = () => {
     },
   ];
 
-  const sortByCategory = (value) => {
-    if (category === "") {
-      return productList;
-    } else {
-      const fitered = productList.filter((product) => {
-        return product.category === value;
-      });
-      return fitered;
-    }
-  };
-  const changeCategory = (e) => {
-    setCategory(e.target.text);
-    setPage(1);
+  const sortByCategory = () => {
+    const fitered = productList.filter((product) => {
+      return product.category === "BUNDLE";
+    });
+    return fitered;
   };
 
   //카테고리 클릭하면 다른 Link로 이동 -> 뒤로가기 눌러도 카테고리 유지
 
   //maxPage가 소수점일 경우 올림
-  const maxPage = Math.ceil(sortByCategory(category).length / limit);
+  const maxPage = Math.ceil(sortByCategory().length / limit);
 
   const sliceData = (data) => {
     if (data) {
@@ -220,65 +210,29 @@ const SubPage = () => {
   };
 
   useEffect(() => {
-    sortByCategory("");
+    sortByCategory();
   }, []);
-
-  console.log(category);
 
   return (
     <Section>
       <div className="sub-title">
         <div className="sub-list-title">APPAREL</div>
         <div className="sub-list-select">
-          <Link
-            to={`/category/tops-t-shirts`}
-            className={
-              category === "TOPS & T-SHIRTS"
-                ? "sub-list-btn-selected"
-                : "sub-list-btn"
-            }
-            value="TOPS & T-SHIRTS"
-            onClick={changeCategory}
-          >
+          <Link to={`/category/tops-t-shirts`} className={"sub-list-btn"}>
             TOPS & T-SHIRTS
           </Link>
-          <Link
-            to={`/category/hoodies-sweatshirts`}
-            className={
-              category === "HOODIES & SWEATSHIRTS"
-                ? "sub-list-btn-selected"
-                : "sub-list-btn"
-            }
-            value="HOODIES & SWEATSHIRTS"
-            onClick={changeCategory}
-          >
+          <Link to={`/category/hoodies-sweatshirts`} className={"sub-list-btn"}>
             HOODIES & SWEATSHIRTS
           </Link>
-          <Link
-            to={`/category/pants`}
-            className={
-              category === "PANTS" ? "sub-list-btn-selected" : "sub-list-btn"
-            }
-            value="PANTS"
-            onClick={changeCategory}
-          >
+          <Link to={`/category/pants`} className={"sub-list-btn"}>
             PANTS
           </Link>
-          <Link
-            to={`/category/bundle`}
-            className={
-              category === "BUNDLE" ? "sub-list-btn-selected" : "sub-list-btn"
-            }
-            value="BUNDLE"
-            onClick={changeCategory}
-          >
+          <Link to={`/category/bundle`} className={"sub-list-btn-selected"}>
             BUNDLE
           </Link>
         </div>
       </div>
-      <ItemListGrid>
-        {sliceData(sortByCategory(category)).map(renderCard)}
-      </ItemListGrid>
+      <ItemListGrid>{sliceData(sortByCategory()).map(renderCard)}</ItemListGrid>
       <div className="pagination">
         <button
           className="first-page"
@@ -310,7 +264,7 @@ const SubPage = () => {
   );
 };
 
-export default SubPage;
+export default Category4;
 
 const Section = styled.div`
   padding: 80px 5% 20px;
