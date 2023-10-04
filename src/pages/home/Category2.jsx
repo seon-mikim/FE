@@ -210,9 +210,7 @@ const Category2 = () => {
     return result;
   };
 
-  useEffect(() => {
-    sortByCategory();
-  }, []);
+
 
   return (
     <Section>

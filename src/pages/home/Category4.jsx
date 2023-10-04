@@ -209,10 +209,6 @@ const Category4 = () => {
     return result;
   };
 
-  useEffect(() => {
-    sortByCategory();
-  }, []);
-
   return (
     <Section>
       <div className="sub-title">

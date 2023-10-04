@@ -133,9 +133,6 @@ const Category1 = () => {
     return fitered;
   };
 
-  //카테고리 클릭하면 다른 Link로 이동 -> 뒤로가기 눌러도 카테고리 유지
-
-  //maxPage가 소수점일 경우 올림
   const maxPage = Math.ceil(sortByCategory().length / limit);
 
   const sliceData = (data) => {
@@ -209,9 +206,6 @@ const Category1 = () => {
     return result;
   };
 
-  useEffect(() => {
-    sortByCategory();
-  }, []);
 
   return (
     <Section>
