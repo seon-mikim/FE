@@ -1,4 +1,3 @@
-import "./MainPage.css";
 import styled from "styled-components";
 import CardLi from "../../components/Card/CardLi";
 

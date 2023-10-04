@@ -1,7 +1,7 @@
 import CardLi from "../../components/Card/CardLi";
 import { useState } from "react";
 import * as S from "./SubPageStyle";
-const SubPage = () => {
+const Category3 = () => {
   const [page, setPage] = useState(1);
   const limit = 4;
   const offset = (page - 1) * limit;
@@ -124,8 +124,13 @@ const SubPage = () => {
     },
   ];
 
-  //maxPage가 소수점일 경우 올림
-  const maxPage = Math.ceil(productList.length / limit);
+  const sortByCategory = () => {
+    const fitered = productList.filter((product) => {
+      return product.category === "PANTS";
+    });
+    return fitered;
+  };
+  const maxPage = Math.ceil(sortByCategory().length / limit);
 
   const sliceData = (data) => {
     if (data) {
@@ -209,11 +214,15 @@ const SubPage = () => {
           <S.StyledLink to={`/category/hoodies-sweatshirts`}>
             HOODIES & SWEATSHIRTS
           </S.StyledLink>
-          <S.StyledLink to={`/category/pants`}>PANTS</S.StyledLink>
+          <S.StyledLinkSelected to={`/category/pants`}>
+            PANTS
+          </S.StyledLinkSelected>
           <S.StyledLink to={`/category/bundle`}>BUNDLE</S.StyledLink>
         </S.SectionTitleCategory>
       </S.SectionTitle>
-      <S.ItemListGrid>{sliceData(productList).map(renderCard)}</S.ItemListGrid>
+      <S.ItemListGrid>
+        {sliceData(sortByCategory()).map(renderCard)}
+      </S.ItemListGrid>
       <S.Pagination>
         <S.PageFirst
           value="first"
@@ -241,4 +250,4 @@ const SubPage = () => {
   );
 };
 
-export default SubPage;
+export default Category3;
