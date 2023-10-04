@@ -9,6 +9,8 @@ import MyPage from "../pages/my";
 import SettingPage from "../pages/my/sub/SettingPage";
 import UserInfoPage from "../pages/my/sub/UserInfoPage";
 import MySalesPage from "../pages/my/sub/MySalesPage";
+import SubPage from "../pages/home/SubPage";
+
 
 const Routers = createBrowserRouter([
   {
@@ -20,7 +22,7 @@ const Routers = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        path: "product/:productId",
+        path: "product/:id",
         element: <ProductDetailPage />,
       },
       {
@@ -52,6 +54,15 @@ const Routers = createBrowserRouter([
             element: <MySalesPage/>
           },
         ]
+        
+      },
+      {
+        path: "subpage",
+        element: <SubPage />,
+      },
+      {
+        path: "productdetailpage",
+        element: <ProductDetailPage />,
       },
     ],
   },
