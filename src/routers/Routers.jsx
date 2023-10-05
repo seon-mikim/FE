@@ -5,6 +5,12 @@ import ProductDetailPage from "../pages/detail/ProductDetailPage";
 import CartPage from "../pages/cart/CartPage";
 import LoginPage from "../pages/login/LoginPage";
 import SignUpPage from "../pages/signup/SignUpPage";
+import MyPage from "../pages/my";
+import SettingPage from "../pages/my/sub/SettingPage";
+import UserInfoPage from "../pages/my/sub/UserInfoPage";
+import MySalesPage from "../pages/my/sub/MySalesPage";
+import OrderPage from "../pages/my/sub/OrderPage";
+import SubPage from "../pages/home/SubPage";
 
 const Routers = createBrowserRouter([
   {
@@ -16,7 +22,7 @@ const Routers = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        path: "product/:productId",
+        path: "product/:id",
         element: <ProductDetailPage />,
       },
       {
@@ -30,6 +36,36 @@ const Routers = createBrowserRouter([
       {
         path: "signup",
         element: <SignUpPage />,
+      },
+      {
+        path: "my",
+        element: <MyPage />,
+        children: [
+          {
+            index: true,
+            element: <UserInfoPage/>
+          },
+          {
+            path: 'settings',
+            element: <SettingPage/>
+          },
+          {
+            path: 'sales',
+            element: <MySalesPage/>
+          },
+          {
+            path: 'orders',
+            element: <OrderPage/>
+          },
+        ]
+      },
+      {
+        path: "subpage",
+        element: <SubPage />,
+      },
+      {
+        path: "productdetailpage",
+        element: <ProductDetailPage />,
       },
     ],
   },
