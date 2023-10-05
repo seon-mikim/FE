@@ -9,7 +9,7 @@ const EmptyDataCard = ({ imageSrc, text, toPath, linkText }) => {
       <ImgWrap>
         <Image imageSrc={imageSrc} />
       </ImgWrap>
-      <Text text={text} />
+      <Text text={text} /> 
       <Link to={toPath}>{linkText}</Link>
     </CardItemWrap>
   );
