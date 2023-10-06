@@ -88,6 +88,7 @@ export const ProductImg = styled.div`
 export const ImgArea = styled.div`
   width: 60%;
   min-width: 600px;
+  max-height: 454px;
   display: flex;
   justify-content: center;
 `;
@@ -177,7 +178,7 @@ export const CountUpBtn = styled.button`
   border-top-right-radius: 2px;
   width: 20px;
   height: 10.5px;
-  background-image: url("/up.gif");
+  background-image: url("../src/assets/images/up.gif");
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
@@ -190,7 +191,7 @@ export const CountDownBtn = styled.button`
   border-bottom-right-radius: 2px;
   width: 20px;
   height: 10.5px;
-  background-image: url("/down.gif");
+  background-image: url("../src/assets/images/down.gif");
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
@@ -208,7 +209,7 @@ export const DeleteOptionBtn = styled.button`
   cursor: pointer;
   width: 12px;
   height: 12px;
-  background: url("/x.gif");
+  background: url("../src/assets/images/x.gif");
   background-repeat: no-repeat;
 `;
 export const TotalPriceDiv = styled.div`
@@ -220,19 +221,19 @@ export const TotalPriceSpan = styled.span`
   font-size: 24px;
   font-weight: bold;
 `;
-export const BuyBtn = styled.button`
-  color: white;
-  background-color: black;
-  box-shadow: 5px 5px 16px 0 rgba(0, 0, 0, 0.3);
-  padding: 22px 35px 23px;
-  font-weight: bold;
-  font-size: 25px;
-  letter-spacing: 3px;
-  text-align: center;
-  border: none;
-  width: 100%;
-  cursor: pointer;
-`;
+// export const BuyBtn = styled.button`
+//   color: white;
+//   background-color: black;
+//   box-shadow: 5px 5px 16px 0 rgba(0, 0, 0, 0.3);
+//   padding: 22px 35px 23px;
+//   font-weight: bold;
+//   font-size: 25px;
+//   letter-spacing: 3px;
+//   text-align: center;
+//   border: none;
+//   width: 100%;
+//   cursor: pointer;
+// `;
 
 export const LowBtnArea = styled.div`
   display: flex;
@@ -252,5 +253,6 @@ export const LowBtn = styled.button`
   font-size: 15px;
   text-align: center;
   margin-top: 1rem;
+  box-shadow: 5px 5px 16px 0 rgba(0, 0, 0, 0.1);
   cursor: pointer;
 `;

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Header = () => {
-  const search = "/search.png";
+  const search = "../src/assets/images/search.png";
 
   const [scrollPosition, setScrollPosition] = useState(0);
   const headerRef = useRef(null);
@@ -44,12 +44,12 @@ const Header = () => {
           <Nav>
             <NavCategory>NEW</NavCategory>
             <StyledLinkCategory to="/subpage">
-              <NavCategory className="category">APPAREL</NavCategory>
+              <NavCategory>APPAREL</NavCategory>
             </StyledLinkCategory>
             <NavCategory>UNIFORM</NavCategory>
             <NavCategory>ACCESSORIES</NavCategory>
             <NavCategory>COLLECTIBLES</NavCategory>
-            <NavCategory>COOLABORATION</NavCategory>
+            <NavCategory>COLLABORATION</NavCategory>
             <NavCategory>SALE</NavCategory>
           </Nav>
           <UserArea>
@@ -74,7 +74,9 @@ const Header = () => {
         <ScrolledInner>
           <ScrolledNav>
             <ScrolledCategory>NEW</ScrolledCategory>
-            <ScrolledCategory>APPAREL</ScrolledCategory>
+            <StyledLinkCategory to="/subpage">
+              <ScrolledCategory>APPAREL</ScrolledCategory>
+            </StyledLinkCategory>
             <ScrolledCategory>UNIFORM</ScrolledCategory>
             <ScrolledCategory>ACCESSORIES</ScrolledCategory>
             <ScrolledCategory>COLLECTIBLES</ScrolledCategory>

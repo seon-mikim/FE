@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const Footer = () => {
-  const top = "/top.png";
-  const bottom = "/bottom.png";
+  const top = "../src/assets/images/top.png"
+  const bottom = "../src/assets/images/bottom.png";
 
   const goToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -11,7 +11,7 @@ const Footer = () => {
     window.scrollTo({ top: 10000, behavior: "smooth" });
   };
   return (
-    <div className="footer">
+    <div>
       <table width="100%">
         <tbody>
           <tr>

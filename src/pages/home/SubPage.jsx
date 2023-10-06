@@ -1,9 +1,11 @@
-import CardLi from "../../components/Card/CardLi";
+import CardList from "../../components/Card/CardList";
 import { useEffect, useState } from "react";
 import * as S from "./SubPageStyle";
 import { useSearchParams } from "react-router-dom";
 const SubPage = () => {
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = parseInt(searchParams.get("page") || "1");
   const limit = 4;
   const offset = (page - 1) * limit;
   const [category, setCategory] = useState("");
@@ -13,7 +15,7 @@ const SubPage = () => {
       id: "P00000KA",
       name: "Denim Shirt Jacket-Black",
       price: 119000,
-      img: ["/p1.jpg", "/p1-2.png"],
+      img: ["../src/assets/images/p1.jpg", "../src/assets/images/p1-2.png"],
       buySize: {
         s: 0,
         m: 0,
@@ -32,7 +34,7 @@ const SubPage = () => {
       id: "P00000KB",
       name: "GOALSTUDIO Delight Tote Bag",
       price: 95200,
-      img: ["/p2.jpg"],
+      img: ["../src/assets/images/p2.jpg"],
       buyQuantity: 0,
       totalStock: 10,
       category: "hoodies-sweatshirts",
@@ -41,7 +43,7 @@ const SubPage = () => {
       id: "P00000KC",
       name: "Denim Shirt Jacket-Blue",
       price: 119000,
-      img: ["/p3.jpg", "/p3-2.png"],
+      img: ["../src/assets/images/p3.jpg", "../src/assets/images/p3-2.png"],
       buySize: {
         s: 0,
         m: 0,
@@ -54,24 +56,24 @@ const SubPage = () => {
         l: 4,
       },
       totalStock: 15,
-      category: "pants",
+      category: "tops-t-shirts",
     },
 
     {
       id: "P00000KD",
       name: "GOALSTUDIO Delight Bag",
       price: 119000,
-      img: ["/p4.jpg", "/p4-2.png"],
+      img: ["../src/assets/images/p4.jpg", "../src/assets/images/p4-2.png"],
       buyQuantity: 0,
       totalStock: 3,
-      category: "bundle",
+      category: "tops-t-shirts",
     },
 
     {
       id: "P00000KE",
       name: "Denim Shirt Jacket-Black",
       price: 119000,
-      img: ["/p1-2.png", "/p1.jpg"],
+      img: ["../src/assets/images/p1-2.png", "../src/assets/images/p1.jpg"],
       buySize: {
         s: 0,
         m: 0,
@@ -90,7 +92,7 @@ const SubPage = () => {
       id: "P00000KF",
       name: "GOALSTUDIO Delight Tote Bag",
       price: 95200,
-      img: ["/p2.jpg"],
+      img: ["../src/assets/images/p2.jpg"],
       buyQuantity: 0,
       totalStock: 10,
       category: "tops-t-shirts",
@@ -99,7 +101,7 @@ const SubPage = () => {
       id: "P00000KG",
       name: "Denim Shirt Jacket-Blue",
       price: 119000,
-      img: ["/p3-2.png", "/p3.jpg"],
+      img: ["../src/assets/images/p3-2.png", "../src/assets/images/p3.jpg"],
       buySize: {
         s: 0,
         m: 0,
@@ -119,45 +121,53 @@ const SubPage = () => {
       id: "P00000KH",
       name: "GOALSTUDIO Delight Bag",
       price: 119000,
-      img: ["/p4-2.png", "/p4.jpg"],
+      img: ["../src/assets/images/p4-2.png", "../src/assets/images/p4.jpg"],
       buyQuantity: 0,
       totalStock: 3,
       category: "bundle",
     },
   ];
-
-  const [searchParams, setSearchParams] = useSearchParams();
-
+//한 페이지 데이터 개수 설정
   const sliceData = (data) => {
     if (data) {
       let result = data.slice(offset, offset + limit);
       return result;
     }
   };
-
+//숫자로 페이지 이동
   const changePage = (e) => {
-    setPage(Number(e.target.value));
+    if (category === null) setSearchParams({ page: e.target.value });
+    else
+      setSearchParams({
+        category,
+        page: e.target.value,
+      });
   };
+  //화살표로 페이지 이동
   const changePagination = (e) => {
     switch (e.target.value) {
       case "first":
-        setPage(1);
+        if (category === null) setSearchParams({ page: 1 });
+        else setSearchParams({ category, page: 1 });
         break;
       case "prev":
-        setPage((prev) => prev - 1);
+        if (category === null) setSearchParams({ page: page - 1 });
+        else setSearchParams({ category, page: page - 1 });
         break;
       case "next":
-        setPage((prev) => prev + 1);
+        if (category === null) setSearchParams({ page: page + 1 });
+        else setSearchParams({ category, page: page + 1 });
         break;
       case "end":
-        setPage(maxPage);
+        if (category === null) setSearchParams({ page: maxPage });
+        else setSearchParams({ category, page: maxPage });
         break;
     }
   };
-
+  //카드 생성
   const renderCard = (product) => {
     return (
-      <CardLi
+      <CardList
         key={product.id}
         id={product.id}
         name={product.name}
@@ -167,6 +177,7 @@ const SubPage = () => {
       />
     );
   };
+  //페이지네이션 생성
   const renderPagination = () => {
     const result = [];
     for (let i = 0; i < maxPage; i++) {
@@ -215,15 +226,8 @@ const SubPage = () => {
   };
   //maxPage가 소수점일 경우 올림
   const maxPage = Math.ceil(sortByCategory(category).length / limit);
-  // const changeCategory = (e) => {
-  //   setCategory(e.target.value);
-  // };
 
-  // window.addEventListener("click", () => {
-  //   sessionStorage.setItem("index", page);
-  // });
   useEffect(() => {
-    // if (sessionStorage.index) setPage(Number(sessionStorage.index));
     handleChangeCategory();
     sortByCategory(category);
   }, [searchParams]);
@@ -234,7 +238,7 @@ const SubPage = () => {
         <S.SectionTitleText>APPAREL</S.SectionTitleText>
         <S.SectionTitleCategory>
           <S.StyledLink
-            to={`?category=tops-t-shirts`}
+            to={`?category=tops-t-shirts&page=1`}
             className={category === "tops-t-shirts" ? "selected" : "default"}
           >
             TOPS & T-SHIRTS
