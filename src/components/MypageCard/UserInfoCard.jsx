@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 
-const UserInfoCard = ({children }) => {
+const UserInfoCard = ({children, ...props }) => {
 
     return (
-      <CardItemWrap>
+      <CardItemWrap {...props}>
         {children }
       </CardItemWrap>
     );

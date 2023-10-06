@@ -1,18 +1,10 @@
 import styled from 'styled-components';
 
-const MyPageList = (Item) => {
-  return ({ ...props }) => {
-    return (
-      <MypageList>
-        <Item {...props} />
-      </MypageList>
-    );
-  };
+const MyPageList = ({ children, ...props }) => {
+  return <MypageList{...props}>{children}</MypageList>;
 };
 
 export default MyPageList;
-
-
 
 const MypageList = styled.ul`
   width: 100%;
