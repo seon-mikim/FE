@@ -9,7 +9,7 @@ export default Main;
 const StMain = styled.main`
 
   max-width: 1200px;
-  height: 100%;
+  padding-bottom:100px ;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

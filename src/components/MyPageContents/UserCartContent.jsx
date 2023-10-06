@@ -1,10 +1,13 @@
 import UserCartCard from '../MypageCard/UserCartCard/UserCartCard';
 import T from '../../assets/images/black_t.jpg';
 import cartIcon from '../../assets/images/cart_icon.svg';
-
 import EmptyDataCard from '../MypageCard/EmptyDataCard';
-
+import Wrap from '../ui/Wrap/Wrap';
+import styled from 'styled-components';
+import MyPageList from '../MyPageList/MyPageList';
+import PaymentCard from '../PaymentCard/PaymentCard';
 const UserCartContent = () => {
+
   const userCartData = [
     {
       productId: 1,
@@ -27,11 +30,26 @@ const UserCartContent = () => {
     );
 
   return (
-    <>
-      <UserCartCard userCartData={userCartData} />;
-     
-    </>
+    <CartContent>
+      <CartList>
+        {userCartData.map((cartDataItem) => (
+          <UserCartCard border='border'
+            key={cartDataItem.productId}
+            cartDataItem={cartDataItem}
+          />
+        ))}
+      </CartList>
+      <PaymentCard />
+    </CartContent>
   );
 };
 
 export default UserCartContent;
+
+const CartContent = styled(Wrap)`
+  display: flex;
+  gap: 200px;
+`;
+const CartList = styled(MyPageList)`
+  width: 100%;
+`;
