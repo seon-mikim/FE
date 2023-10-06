@@ -3,10 +3,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useState } from "react";
-import { useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const ProductDetailPage = () => {
-  const soldout = "/soldout.png";
+  const soldout = "../src/assets/images/soldout.png";
 
   const { data: productData } = useLocation().state;
 
@@ -14,6 +14,7 @@ const ProductDetailPage = () => {
   const [size, setSize] = useState({ s: 0, m: 0, l: 0 });
   const [nonSize, setNonSize] = useState(1);
 
+  //input 수량 증가
   const handleUpButton = (e) => {
     switch (e.target.value) {
       case "s":
@@ -36,6 +37,7 @@ const ProductDetailPage = () => {
         break;
     }
   };
+  //input 수량 감소
   const handleDownButton = (e) => {
     switch (e.target.value) {
       case "s":
@@ -58,6 +60,7 @@ const ProductDetailPage = () => {
         break;
     }
   };
+  //input에서 직접 숫자 입력 시
   const changeQuantity = (e) => {
     switch (e.target.id) {
       case "s":
@@ -80,7 +83,7 @@ const ProductDetailPage = () => {
         break;
     }
   };
-
+  // x 버튼 클릭 시
   const deleteItem = (e) => {
     switch (e.target.value) {
       case "s":
@@ -102,7 +105,7 @@ const ProductDetailPage = () => {
         break;
     }
   };
-
+  //셀렉트박스 선택 시
   const handleSelect = (e) => {
     if (isInitial) setIsInitial(false);
 
@@ -126,7 +129,7 @@ const ProductDetailPage = () => {
         break;
     }
   };
-
+  //서버에 보낼 데이터
   const setBuySize = () => {
     if (productData.buySize) {
       productData.buySize = size;
@@ -138,10 +141,10 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     setBuySize();
-    console.log("size", size);
-    console.log("buySize", productData.buySize);
-    console.log("productData", productData);
-    console.log("nonSize", nonSize);
+    // console.log("size", size);
+    // console.log("buySize", productData.buySize);
+    // console.log("productData", productData);
+    // console.log("nonSize", nonSize);
     if (productData.totalStock === 0) {
       setNonSize(0);
     }
@@ -168,15 +171,18 @@ const ProductDetailPage = () => {
     <>
       <S.Section>
         <S.ImgArea>
+          {/* 이미지 슬라이더 */}
           <S.ProductImg default={productData.img}>
             <div>
               <Slider {...settings}>{productData.img.map(renderImg)}</Slider>
             </div>
           </S.ProductImg>
         </S.ImgArea>
+        {/* 제품 정보 */}
         <S.InfoArea>
           <S.ProductTitle>
             {productData.name}
+            {/* 제품 재고 없을 시 */}
             {productData.totalStock === 0 && (
               <S.SoldOut>
                 <img src={soldout} alt="" />
@@ -186,7 +192,7 @@ const ProductDetailPage = () => {
           <S.ProductPrice>
             {productData.price.toLocaleString()}원
           </S.ProductPrice>
-
+          {/* 제품 옵션(사이즈)이 있는 제품일 경우 옵션 선택*/}
           {productData?.buySize && (
             <S.TalbeRow>
               <S.TableHead>사이즈</S.TableHead>
@@ -220,8 +226,9 @@ const ProductDetailPage = () => {
               </S.TableData>
             </S.TalbeRow>
           )}
-
+          {/* 선택한 옵션 수량 확인하는 영역 */}
           <div className="option-selected-area">
+            {/* 옵션선택이 없는 제품일 경우 바로 수량 선택 */}
             {!productData.buySize && (
               <S.OptionSelected>
                 <p>{productData.name}</p>
@@ -247,7 +254,7 @@ const ProductDetailPage = () => {
                 </S.SelectedOptionPrice>
               </S.OptionSelected>
             )}
-
+            {/* 옵션을 선택해서 옵션(사이즈s)가 1개 이상일 경우 */}
             {size.s > 0 && (
               <S.OptionSelected>
                 <p>
@@ -337,7 +344,7 @@ const ProductDetailPage = () => {
           </div>
 
           <S.TotalPriceDiv>
-            TOTAL :{" "}
+            TOTAL :{/* 옵션(사이즈)가 있는 제품일 경우 */}
             {productData.buySize && (
               <S.TotalPriceSpan>
                 {(
@@ -347,21 +354,23 @@ const ProductDetailPage = () => {
                 원
               </S.TotalPriceSpan>
             )}
+            {/* 옵션(사이즈)가 없는 제품일 경우 */}
             {!productData.buySize && (
               <S.TotalPriceSpan>
                 {(productData.price * nonSize).toLocaleString()}원
               </S.TotalPriceSpan>
             )}
           </S.TotalPriceDiv>
+          {/* 품절일 경우 */}
           {productData.totalStock != 0 && (
             <>
-              <S.BuyBtn>구매하기</S.BuyBtn>
               <S.LowBtnArea>
                 <S.LowBtn>장바구니</S.LowBtn>
                 <S.LowBtn>관심상품</S.LowBtn>
               </S.LowBtnArea>
             </>
           )}
+          {/* 품절이 아닐 경우 */}
           {productData.totalStock === 0 && (
             <S.LowBtnArea>
               <S.LowBtn>품절</S.LowBtn>

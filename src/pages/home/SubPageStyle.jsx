@@ -104,7 +104,7 @@ export const PageFirst = styled.button`
   border: none;
   border: 1px solid #d7d5d5;
   width: 34px;
-  background-image: url("/first.gif");
+  background-image: url("../src/assets/images/first.gif");
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
@@ -114,7 +114,7 @@ export const PagePrev = styled.button`
   border-top: 1px solid #d7d5d5;
   border-bottom: 1px solid #d7d5d5;
   width: 34px;
-  background-image: url("/prev.gif");
+  background-image: url("../src/assets/images/prev.gif");
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
@@ -124,7 +124,7 @@ export const PageNext = styled.button`
   border-top: 1px solid #d7d5d5;
   border-bottom: 1px solid #d7d5d5;
   width: 34px;
-  background-image: url("/next.gif");
+  background-image: url("../src/assets/images/next.gif");
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
@@ -133,7 +133,7 @@ export const PageEnd = styled.button`
   border: none;
   border: 1px solid #d7d5d5;
   width: 34px;
-  background-image: url("/end.gif");
+  background-image: url("../src/assets/images/end.gif");
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;

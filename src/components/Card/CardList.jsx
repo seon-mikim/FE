@@ -2,7 +2,7 @@ import React from "react";
 import Card from "./Card";
 import styled from "styled-components";
 
-const CardLi = ({ id, name, price, img, totalStock, productData }) => {
+const CardList = ({ id, name, price, img, totalStock, productData }) => {
   return (
     <ItemList>
       <Card
@@ -17,7 +17,7 @@ const CardLi = ({ id, name, price, img, totalStock, productData }) => {
   );
 };
 
-export default CardLi;
+export default CardList;
 
 const ItemList = styled.li`
   width: 25%;
