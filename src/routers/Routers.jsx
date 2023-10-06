@@ -65,10 +65,6 @@ const Routers = createBrowserRouter([
         element: <SubPage />,
       },
       {
-        path: 'productdetailpage',
-        element: <ProductDetailPage />,
-      },
-      {
         path: 'order',
         element: <OrderPage/>
       }
