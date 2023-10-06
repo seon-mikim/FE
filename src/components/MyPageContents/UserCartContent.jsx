@@ -5,9 +5,8 @@ import EmptyDataCard from '../MypageCard/EmptyDataCard';
 import Wrap from '../ui/Wrap/Wrap';
 import styled from 'styled-components';
 import MyPageList from '../MyPageList/MyPageList';
-import PaymentCard from '../PaymentCard/PaymentCard';
+import PaymentCard from '../P/PaymentCard';
 const UserCartContent = () => {
-
   const userCartData = [
     {
       productId: 1,
@@ -33,7 +32,8 @@ const UserCartContent = () => {
     <CartContent>
       <CartList>
         {userCartData.map((cartDataItem) => (
-          <UserCartCard border='border'
+          <UserCartCard
+            border="border"
             key={cartDataItem.productId}
             cartDataItem={cartDataItem}
           />
