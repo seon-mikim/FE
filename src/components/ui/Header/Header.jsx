@@ -33,7 +33,13 @@ const Header = () => {
 
         <HeaderInner>
           <StyledLink to="/">
-            <Logo>로고</Logo>
+            <Logo
+            // onClick={() => {
+            //   sessionStorage.setItem("index", 1);
+            // }}
+            >
+              로고
+            </Logo>
           </StyledLink>
           <Nav>
             <NavCategory>NEW</NavCategory>

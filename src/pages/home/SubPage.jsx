@@ -1,10 +1,12 @@
 import CardLi from "../../components/Card/CardLi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./SubPageStyle";
+import { useSearchParams } from "react-router-dom";
 const SubPage = () => {
   const [page, setPage] = useState(1);
   const limit = 4;
   const offset = (page - 1) * limit;
+  const [category, setCategory] = useState("");
 
   const productList = [
     {
@@ -24,7 +26,7 @@ const SubPage = () => {
         l: 4,
       },
       totalStock: 15,
-      category: "TOPS & T-SHIRTS",
+      category: "tops-t-shirts",
     },
     {
       id: "P00000KB",
@@ -33,7 +35,7 @@ const SubPage = () => {
       img: ["/p2.jpg"],
       buyQuantity: 0,
       totalStock: 10,
-      category: "HOODIES & SWEATSHIRTS",
+      category: "hoodies-sweatshirts",
     },
     {
       id: "P00000KC",
@@ -52,7 +54,7 @@ const SubPage = () => {
         l: 4,
       },
       totalStock: 15,
-      category: "PANTS",
+      category: "pants",
     },
 
     {
@@ -62,7 +64,7 @@ const SubPage = () => {
       img: ["/p4.jpg", "/p4-2.png"],
       buyQuantity: 0,
       totalStock: 3,
-      category: "BUNDLE",
+      category: "bundle",
     },
 
     {
@@ -82,7 +84,7 @@ const SubPage = () => {
         l: 4,
       },
       totalStock: 15,
-      category: "TOPS & T-SHIRTS",
+      category: "tops-t-shirts",
     },
     {
       id: "P00000KF",
@@ -91,7 +93,7 @@ const SubPage = () => {
       img: ["/p2.jpg"],
       buyQuantity: 0,
       totalStock: 10,
-      category: "TOPS & T-SHIRTS",
+      category: "tops-t-shirts",
     },
     {
       id: "P00000KG",
@@ -110,7 +112,7 @@ const SubPage = () => {
         l: 4,
       },
       totalStock: 15,
-      category: "PANTS",
+      category: "pants",
     },
 
     {
@@ -120,12 +122,11 @@ const SubPage = () => {
       img: ["/p4-2.png", "/p4.jpg"],
       buyQuantity: 0,
       totalStock: 3,
-      category: "BUNDLE",
+      category: "bundle",
     },
   ];
 
-  //maxPage가 소수점일 경우 올림
-  const maxPage = Math.ceil(productList.length / limit);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const sliceData = (data) => {
     if (data) {
@@ -198,22 +199,71 @@ const SubPage = () => {
     return result;
   };
 
+  const handleChangeCategory = () => {
+    setCategory(searchParams.get("category"));
+  };
+
+  const sortByCategory = (value) => {
+    if (value === null) {
+      return productList;
+    } else {
+      const filtered = productList.filter((product) => {
+        return product.category === value;
+      });
+      return filtered;
+    }
+  };
+  //maxPage가 소수점일 경우 올림
+  const maxPage = Math.ceil(sortByCategory(category).length / limit);
+  // const changeCategory = (e) => {
+  //   setCategory(e.target.value);
+  // };
+
+  // window.addEventListener("click", () => {
+  //   sessionStorage.setItem("index", page);
+  // });
+  useEffect(() => {
+    // if (sessionStorage.index) setPage(Number(sessionStorage.index));
+    handleChangeCategory();
+    sortByCategory(category);
+  }, [searchParams]);
+
   return (
     <S.Section>
       <S.SectionTitle>
         <S.SectionTitleText>APPAREL</S.SectionTitleText>
         <S.SectionTitleCategory>
-          <S.StyledLink to={`/category/tops-t-shirts`}>
+          <S.StyledLink
+            to={`?category=tops-t-shirts`}
+            className={category === "tops-t-shirts" ? "selected" : "default"}
+          >
             TOPS & T-SHIRTS
           </S.StyledLink>
-          <S.StyledLink to={`/category/hoodies-sweatshirts`}>
+          <S.StyledLink
+            to={`?category=hoodies-sweatshirts`}
+            className={
+              category === "hoodies-sweatshirts" ? "selected" : "default"
+            }
+          >
             HOODIES & SWEATSHIRTS
           </S.StyledLink>
-          <S.StyledLink to={`/category/pants`}>PANTS</S.StyledLink>
-          <S.StyledLink to={`/category/bundle`}>BUNDLE</S.StyledLink>
+          <S.StyledLink
+            to={`?category=pants`}
+            className={category === "pants" ? "selected" : "default"}
+          >
+            PANTS
+          </S.StyledLink>
+          <S.StyledLink
+            to={`?category=bundle`}
+            className={category === "bundle" ? "selected" : "default"}
+          >
+            BUNDLE
+          </S.StyledLink>
         </S.SectionTitleCategory>
       </S.SectionTitle>
-      <S.ItemListGrid>{sliceData(productList).map(renderCard)}</S.ItemListGrid>
+      <S.ItemListGrid>
+        {sliceData(sortByCategory(category)).map(renderCard)}
+      </S.ItemListGrid>
       <S.Pagination>
         <S.PageFirst
           value="first"

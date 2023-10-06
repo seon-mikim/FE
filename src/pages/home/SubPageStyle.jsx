@@ -38,6 +38,16 @@ export const StyledLink = styled(Link)`
     line-height: 14px;
     cursor: pointer;
   }
+
+  &.selected{
+    color: white;
+    background-color: black;
+    border: 1px solid black;
+    padding: 12px 20px;
+    margin: 0 3px 5px 3px;
+    line-height: 14px;
+    cursor: pointer;
+  }
 `;
 export const StyledLinkSelected = styled(Link)`
   color: white;
