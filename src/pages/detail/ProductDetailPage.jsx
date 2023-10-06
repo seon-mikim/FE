@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation} from "react-router-dom";
 
 const ProductDetailPage = () => {
   const soldout = "/soldout.png";
