@@ -6,7 +6,7 @@ import PaymentInfo from './PurchaseInfo';
 import MyPageList from '../MyPageList/MyPageList';
 import UnifiedCartCard from '../CartCard/UnifiedCartCard';
 
-const PurchaseCard = ({ userCartData }) => {
+const PurchaseCard = ({ userCartData, totalPrice, totalCount }) => {
   const pathName = useLocation().pathname;
   const isCartPage = pathName === '/cart';
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const PurchaseCard = ({ userCartData }) => {
     <PaymentCardWrap>
       <Span text={isCartPage ? '결제정보' : '주문상품 1개'} />
       {isCartPage ? (
-        <PaymentInfo labelText="상품수" value="1개" />
+        <PaymentInfo labelText="상품수" value={`${totalCount}개` } />
       ) : (
         <MyPageList>
           {userCartData.map((cartDataItem) => (
@@ -29,7 +29,7 @@ const PurchaseCard = ({ userCartData }) => {
         </MyPageList>
       )}
       <PaymentInfo labelText="상품금액" value="10000원" />
-      <PaymentInfo labelText="총 결제금액" value="10000원" border="borderTop" />
+      <PaymentInfo labelText="총 결제금액" value={ `${totalPrice}원`} border="borderTop" />
       <PurchaseButtonWrap>
         <button onClick={handlePurchaseClick}>{isCartPage?'구매하기':'결제하기'}</button>
       </PurchaseButtonWrap>
@@ -60,3 +60,4 @@ const PurchaseButtonWrap = styled(Wrap)`
     font-size: 18px;
   }
 `;
+

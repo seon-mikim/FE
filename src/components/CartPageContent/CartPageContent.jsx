@@ -4,8 +4,11 @@ import Wrap from '../ui/Wrap/Wrap';
 import T from '../../assets/images/black_t.jpg';
 import styled from 'styled-components';
 import PurchaseCard from '../PurchaseCard/PurchaseCard';
+import { useState } from 'react';
 
 const CartPageContent = () => {
+  const [totalCount, setTotalCount] = useState()
+  const [totalPrice, setTotalPrice] = useState()
   const userCartData = [
     {
       productId: 1,
@@ -26,11 +29,13 @@ const CartPageContent = () => {
           <CartCard
             key={cartItemData.productId}
             cartItemData={cartItemData}
+            setTotalCount={setTotalCount}
+            setTotalPrice={setTotalPrice }
             border="border"
           />
         ))}
 			</CartList>
-			<PurchaseCard/>
+      <PurchaseCard totalPrice={totalPrice} totalCount={totalCount } />
     </CartContent>
   );
 };

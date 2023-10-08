@@ -27,9 +27,15 @@ export const ImgWrap = styled(Wrap)`
 `;
 export const CountWrap = styled(Wrap)`
   margin-left: 8%;
-	input {
-		width: 10px;
-	}
+  input {
+    width: 10px;
+    text-align: center;
+  }
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 export const PriceText = styled(Span)`
   margin-left: 15%;
