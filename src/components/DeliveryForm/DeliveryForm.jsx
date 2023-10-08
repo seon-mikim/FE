@@ -2,41 +2,18 @@ import styled from 'styled-components';
 import Input from '../ui/Input/Input';
 import { useState } from 'react';
 import PostCodeButton from '../PostCodeButton/PostCodeButton';
+import UseDeliveryForm from '../../hooks/UseDeliveryForm';
 
 const DeliveryForm = () => {
   const [isShown, setIsShown] = useState(true);
-  const [fullPhoneNumber, setFullPhoneNumber] = useState('');
-  const [phoneInput, setPhoneInput] = useState({
-    fristPhoneNumber: '',
-    secondPhoneNumber: '',
-    thridPhoneNumber: '',
-  });
-  const [deliveryInput, setDeliveryInput] = useState({
-    recipient: '',
-    recipient_tel: '',
-    recipient_address: '',
-    recipient_zipcode: '',
-    recipient_detail_address: '',
-  });
-  const handleDevlieInputChange = (event) => {
-    const { name, value } = event.target;
-    setDeliveryInput({ ...deliveryInput, [name]: value });
-  };
-  const handlePhoneInputChange = (event) => {
-    const { name, value } = event.target;
-    setPhoneInput({ ...phoneInput, [name]: value });
-    setFullPhoneNumber(
-      `${phoneInput.fristPhoneNumber}-${phoneInput.secondPhoneNumber}-${phoneInput.thridPhoneNumber}`
-    );
-    setDeliveryInput({ ...deliveryInput, recipient_tel: fullPhoneNumber });
-  };
-  const getAddress = (recipient_address, recipient_zipcode) => {
-    setDeliveryInput({
-      ...deliveryInput,
-      recipient_address,
-      recipient_zipcode,
-    });
-  };
+  const {
+    handleDevlieInputChange,
+    handlePhoneInputChange,
+    getAddress,
+    deliveryInput,
+    phoneInput,
+  } = UseDeliveryForm();
+  
   const handleAccordionButton = () => {
     setIsShown((prev) => !prev);
   };
@@ -106,7 +83,8 @@ const DeliveryForm = () => {
                 <div>
                   <DetailAddressInput
                     name="recipient_detail_address"
-                    placeholder="상세 주소"
+                    value={deliveryInput.recipient_detail_address}
+                    placeholder="상세주소"
                     onChange={handleDevlieInputChange}
                   />
                 </div>
