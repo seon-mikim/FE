@@ -5,6 +5,8 @@ import T from '../../assets/images/black_t.jpg';
 import styled from 'styled-components';
 import PurchaseCard from '../PurchaseCard/PurchaseCard';
 import { useState } from 'react';
+import EmptyStateCard from '../EmptyStateCard/EmptyStateCard';
+import CartIcon from '../../assets/images/cart_icon.svg'
 
 const CartPageContent = () => {
   const [totalCount, setTotalCount] = useState()
@@ -20,7 +22,7 @@ const CartPageContent = () => {
     },
   ];
 
-  if (userCartData.length === 0) return;
+  if (userCartData.length === 0) return <EmptyStateCard imageSrc={CartIcon} text='장바구니가 비었습니다.' toPath='/' linkText='상품 보러가기' />;
 
   return (
     <CartContent>
