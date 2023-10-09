@@ -64,7 +64,8 @@ export default DeliveryForm;
 const DeliveryFormWrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 76%;
+  margin-bottom: 20px;
+
 `;
 
 const AccordionHeader = styled.div`
