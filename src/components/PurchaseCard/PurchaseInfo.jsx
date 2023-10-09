@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Wrap from "../ui/Wrap/Wrap";
 import Span from "../ui/Span/Span";
 
-const PaymentInfo = ({labelText,value, border  }) => {
+const PurchaseInfo = ({labelText,value, border  }) => {
   return (
 		<PaymentWrap border={border }>
 			<Span text={labelText } />
@@ -11,7 +11,7 @@ const PaymentInfo = ({labelText,value, border  }) => {
   );
 };
 
-export default PaymentInfo;
+export default PurchaseInfo;
 
 
 const PaymentWrap = styled(Wrap)`

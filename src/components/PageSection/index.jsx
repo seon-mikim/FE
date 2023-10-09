@@ -3,7 +3,7 @@ import Article from '../ui/Article/Article';
 import Section from '../ui/Section/Section';
 import Title from '../ui/Title/Title';
 
-const MyPageSection = ({ titleText, children }) => {
+const PageSection = ({ titleText, children }) => {
   return (
     <Section>
       <SectionHeader titleText={titleText} />
@@ -12,7 +12,7 @@ const MyPageSection = ({ titleText, children }) => {
   );
 };
 
-export default MyPageSection;
+export default PageSection;
 
 const SectionHeader = styled(Title)`
   font-size: 22px;

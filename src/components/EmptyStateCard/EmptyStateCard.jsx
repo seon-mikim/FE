@@ -3,7 +3,7 @@ import Wrap from '../ui/Wrap/Wrap';
 import styled from 'styled-components';
 import Text from '../ui/Text/Text';
 import { Link } from 'react-router-dom';
-const EmptyDataCard = ({ imageSrc, text, toPath, linkText }) => {
+const EmptyStateCard = ({ imageSrc, text, toPath, linkText }) => {
   return (
     <CardItemWrap>
       <ImgWrap>
@@ -15,7 +15,7 @@ const EmptyDataCard = ({ imageSrc, text, toPath, linkText }) => {
   );
 };
 
-export default EmptyDataCard;
+export default EmptyStateCard;
 
 const CardItemWrap = styled(Wrap)`
   display: flex;
