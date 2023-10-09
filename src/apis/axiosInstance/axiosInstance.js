@@ -11,7 +11,10 @@ const createInstance = (contentType) => {
   const instance = axios.create(config);
 
   instance.interceptors.request.use((config) => {
-    if (config.url.includes('/login') || config.url.includes('/signup')) {
+    if (
+      config.url.includes('member/login') ||
+      config.url.includes('member/signup')
+    ) {
       const accessToken = document.cookie
         .split('; ')
         .find((row) => row.startsWith('accessToken='))

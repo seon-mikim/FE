@@ -1,161 +1,320 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import PostCode from '../../components/PostCode/PostCode';
-import DefaultProfile from '../../assets/images/default_profile_img.gif';
+import axios from 'axios';
+import { signUp } from '../../apis/authApi/authApi';
 
-const SignUpPage = () => {
-  const [name, setName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [address, setAddress] = useState('');
-  const [postCode, setPostCode] = useState('');
-  const [file, setFile] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [gender, setGender] = useState('');
+function SignUpPage() {
+  const navigate = useNavigate();
 
-  const handleEmailChange = (event) => {
-    const { value } = event.target;
-    setEmail(value);
-  };
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    name: '',
+    address: '',
+    addressDetail: '',
+    addressZipcode: '',
+    telNumber: '',
+    gender: 'male',
+    profileImage: {},
+  });
 
-  const handleChange = (event) => {
-    const { files } = event.target;
-    if (files[0]) {
-      let reader = new FileReader();
-      reader.readAsDataURL(files[0]);
-      reader.onloadend = () => {
-        let base64data = reader.result;
-        setFile(base64data);
-      };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    if (name === 'email') {
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (!emailPattern.test(value)) {
+        setEmailError('올바른 이메일 형식이 아닙니다.');
+      } else {
+        setEmailError('');
+      }
+    }
+
+    if (name === 'password') {
+      const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+      if (!passwordPattern.test(value)) {
+        setPasswordError(
+          '비밀번호는 최소 8자 이상이며, 숫자와 문자를 포함해야 합니다.'
+        );
+      } else {
+        setPasswordError('');
+      }
+    }
+
+    if (name === 'telNumber') {
+      const phoneNumberPattern = /^010-\d{4}-\d{4}$/;
+      if (!phoneNumberPattern.test(value)) {
+        setPhoneNumberError(
+          '올바른 휴대폰 번호 형식이 아닙니다. (예: 010-0000-0000)'
+        );
+      } else {
+        setPhoneNumberError('');
+      }
     }
   };
 
-  const getAddressData = (addressData) => {
-    setAddress(addressData);
+  const handleProfileImageChange = (e) => {
+    const file = e.target.files[0];
+    setProfileImage(file);
   };
 
-  const getPostCodeData = (postCodeData) => {
-    setPostCode(postCodeData);
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('password', formData.password);
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('address', formData.address);
+      formDataToSend.append('addressDetail', formData.addressDetail);
+      formDataToSend.append('addressZipcode', formData.addressZipcode);
+      formDataToSend.append('telNumber', formData.telNumber);
+      formDataToSend.append('gender', formData.gender);
+      formDataToSend.append('profileImage', profileImage);
+
+      const response = await axios.post(
+        'http://15.165.177.248:8080/member/signup',
+        formDataToSend
+      );
+      // signUp(formDataToSend)
+      response.data.success && navigate('/login', { replace: true });
+    } catch (error) {
+      alert(error.response.data);
+    }
+  };
+
+  const handlePasswordConfirm = (e) => {
+    const { value } = e.target;
+    setPasswordConfirm(value);
+  };
+
+  const idValidation = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        'http://15.165.177.248:8080/member/signup',
+        {
+          formData,
+        }
+      );
+
+      console.log('Login successful:', response.data);
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   };
 
   return (
-    <FormContainer>
-      <form>
-        <Label>
-          Login
-          <ImageInputContainer>
-            <ProfileImage src={file !== '' ? file : DefaultProfile} alt="" />
-            <StyledInput type="file" onChange={handleChange} />
-          </ImageInputContainer>
-        </Label>
-
-        <Label>이름</Label>
-        <StyledInput type="text" placeholder="이름" />
-
-        <Label>이메일</Label>
-        <StyledInput
-          value={email}
-          onChange={handleEmailChange}
-          type="email"
-          placeholder="이메일"
-        />
-
-        <Label>비밀번호</Label>
-        <StyledInput type="password" placeholder="비밀번호" />
-
-        <Label>비밀번호 재확인</Label>
-        <StyledInput type="password" placeholder="비밀번호 재확인" />
-
-        <Label>핸드폰 번호</Label>
-        <StyledInput type="number" placeholder="핸드폰 번호" />
-
-        <div>
-          <label>
-            주소
-            <StyledInput
-              type="text"
-              name="postcode"
-              value={PostCode}
-              placeholder="우편번호"
+    <CenteredContainer>
+      <RegistrationContainer>
+        <Title>회원가입</Title>
+        <Form>
+          <Label htmlFor="profileImage" style={{ marginTop: '10px' }}>
+            프로필 이미지
+          </Label>
+          <Input
+            type="file"
+            id="profileImage"
+            name="profileImage"
+            onChange={handleProfileImageChange}
+          />
+          <Label htmlFor="email">이메일</Label>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              style={{ width: '75%', marginRight: '10px' }}
             />
-            // 상세주소
-            <postCode
-              getAddressData={getAddressData}
-              getPostcodeData={getPostCodeData}
-            />
-          </label>
-        </div>
-
-        <div>
-          <label>
-            <StyledInput type="text" placeholder="상세주소" />
-          </label>
-        </div>
-
-        <label id="gender">
-          성별
-          <div>
-            <input
-              name="gender"
-              id="male"
-              className="radio-input gender-male-input"
-              type="radio"
-            />
-            <span>남자 </span>
-            <input
-              name="gender"
-              id="female"
-              classname="radio-input gender-female-input"
-              type="radio"
-            />
-            <span>여자 </span>
+            <Button style={{ fontSize: '12px', height: '38px' }}>
+              중복확인
+            </Button>
           </div>
-        </label>
+          {emailError && (
+            <p style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>
+              {emailError}
+            </p>
+          )}
+          <Label htmlFor="password">비밀번호</Label>
+          <Input
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+          {passwordError && (
+            <p style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>
+              {passwordError}
+            </p>
+          )}
+          <Label htmlFor="passwordConfirm">비밀번호 중복확인</Label>
+          <Input
+            type="password"
+            id="passwordConfirm"
+            name="passwordConfirm"
+            value={passwordConfirm}
+            onChange={handlePasswordConfirm}
+          />
+          {formData.password !== passwordConfirm && (
+            <p style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>
+              비밀번호가 일치하지 않습니다.
+            </p>
+          )}
+          <Label htmlFor="name">이름</Label>
+          <Input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
+          <Label htmlFor="address">주소</Label>
+          <Input
+            type="text"
+            id="address"
+            name="address"
+            value={formData.address}
+            onChange={handleInputChange}
+          />
+          <Label htmlFor="address">상세 주소</Label>
+          <Input
+            type="text"
+            id="addressDetail"
+            name="addressDetail"
+            value={formData.addressDetail}
+            onChange={handleInputChange}
+          />
+          <Label htmlFor="postalCode">우편번호</Label>
+          <Input
+            type="text"
+            id="addressZipcode"
+            name="addressZipcode"
+            value={formData.addressZipcode}
+            onChange={handleInputChange}
+          />
+          <Label htmlFor="phoneNumber">휴대폰 번호</Label>
+          <Input
+            type="text"
+            id="telNumber"
+            name="telNumber"
+            value={formData.phoneNumber}
+            onChange={handleInputChange}
+          />
+          {phoneNumberError && (
+            <p style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>
+              {phoneNumberError}
+            </p>
+          )}
+          <CheckBoxGroup>
+            <Label>Gender</Label>
+            <div style={{ marginBottom: '10px' }}>
+              <CheckBoxLabel>
+                Male
+                <CheckBoxInput
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  checked={formData.gender === 'male'}
+                  onChange={handleInputChange}
+                />
+              </CheckBoxLabel>
+              <CheckBoxLabel>
+                Female
+                <CheckBoxInput
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  checked={formData.gender === 'female'}
+                  onChange={handleInputChange}
+                />
+              </CheckBoxLabel>
+            </div>
+          </CheckBoxGroup>
 
-        <Button>회원 가입</Button>
-      </form>
-    </FormContainer>
+          <Button onClick={(e) => handleRegister(e)}>Register</Button>
+        </Form>
+      </RegistrationContainer>
+    </CenteredContainer>
   );
-};
+}
 
-const FormContainer = styled.div`
+export default SignUpPage;
+
+const CenteredContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  margin: auto;
-  padding: 2em;
+  align-items: center;
+  height: 130vh;
 `;
 
-const Label = styled.label`
-  font-size: 1em;
+const RegistrationContainer = styled.div`
+  width: 400px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 `;
 
-const StyledInput = styled.input`
-  display: block;
-  width: 300px;
-  height: 30px;
-  padding-left: 10px;
+const Title = styled.h2`
+  text-align: center;
   margin-bottom: 20px;
 `;
 
-const Button = styled.button`
-  width: 300px;
-  height: 40px;
-  font-size: 1em;
-`;
-
-const ImageInputContainer = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
 `;
 
-const ProfileImage = styled.img`
-  width: auto;
-  height: auto;
-  max-width: 200px;
-  max-height: 200px;
+const Label = styled.label`
+  margin-bottom: 10px;
 `;
 
-export default SignUpPage;
+const Input = styled.input`
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+`;
+
+const CheckBoxGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const CheckBoxLabel = styled.label`
+  margin-right: 10px;
+`;
+
+const CheckBoxInput = styled.input`
+  margin-right: 5px;
+`;
+
+const Button = styled.button`
+  background-color: black;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
