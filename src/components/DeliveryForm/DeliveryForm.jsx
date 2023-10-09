@@ -3,6 +3,7 @@ import Input from '../ui/Input/Input';
 import { useState } from 'react';
 import PostCodeButton from '../PostCodeButton/PostCodeButton';
 import UseDeliveryForm from '../../hooks/UseDeliveryForm';
+import Text from '../ui/Text/Text';
 
 const DeliveryForm = () => {
   const [isShown, setIsShown] = useState(true);
@@ -12,8 +13,11 @@ const DeliveryForm = () => {
     getAddress,
     deliveryInput,
     phoneInput,
+    alertMessage,
+    addRef,
+    validateInputValue,
   } = UseDeliveryForm();
-  
+
   const handleAccordionButton = () => {
     setIsShown((prev) => !prev);
   };
@@ -28,37 +32,51 @@ const DeliveryForm = () => {
           <DeliveryFormContent>
             <label>
               수령인
-              <Input
-                placeholder="수령인"
-                name="recipient"
-                value={deliveryInput.recipient}
-                onChange={handleDevlieInputChange}
-              />
+              <div>
+                <Input
+                  placeholder="수령인"
+                  name="recipient"
+                  value={deliveryInput.recipient}
+                  onChange={handleDevlieInputChange}
+                  ref={(ref) => addRef('recipient', ref)}
+                  onBlur={() => validateInputValue('recipient')}
+                />
+                <Text text={alertMessage.recipient} />
+              </div>
             </label>
             <label>
               연락처
-              <TelInputWrap name="">
-                <TelInput
-                  placeholder="010"
-                  name="fristPhoneNumber"
-                  value={phoneInput.fristPhoneNumber}
-                  onChange={handlePhoneInputChange}
-                />
-                <div>-</div>
-                <TelInput
-                  placeholder="1234"
-                  name="secondPhoneNumber"
-                  value={phoneInput.secondPhoneNumber}
-                  onChange={handlePhoneInputChange}
-                />
-                <div>-</div>
-                <TelInput
-                  placeholder="5678"
-                  name="thridPhoneNumber"
-                  value={phoneInput.thridPhoneNumber}
-                  onChange={handlePhoneInputChange}
-                />
-              </TelInputWrap>
+              <TelWrap name="">
+                <TelInputWrap>
+                  <TelInput
+                    placeholder="010"
+                    name="fristPhoneNumber"
+                    value={phoneInput.fristPhoneNumber}
+                    onChange={handlePhoneInputChange}
+                    onBlur={() => validateInputValue('recipient_tel')}
+                    ref={(ref) => addRef('recipient_tel', ref)}
+                  />
+                  <div>-</div>
+                  <TelInput
+                    placeholder="1234"
+                    name="secondPhoneNumber"
+                    value={phoneInput.secondPhoneNumber}
+                    onChange={handlePhoneInputChange}
+                    onBlur={() => validateInputValue('recipient_tel')}
+                    ref={(ref) => addRef('recipient_tel', ref)}
+                  />
+                  <div>-</div>
+                  <TelInput
+                    placeholder="5678"
+                    name="thridPhoneNumber"
+                    value={phoneInput.thridPhoneNumber}
+                    onChange={handlePhoneInputChange}
+                    onBlur={() => validateInputValue('recipient_tel')}
+                    ref={(ref) => addRef('recipient_tel', ref)}
+                  />
+                </TelInputWrap>
+                <Text text={alertMessage.recipient_tel} />
+              </TelWrap>
             </label>
             <label>
               배송지
@@ -87,6 +105,9 @@ const DeliveryForm = () => {
                     placeholder="상세주소"
                     onChange={handleDevlieInputChange}
                   />
+                </div>
+                <div>
+                  <Text />
                 </div>
               </div>
             </label>
@@ -119,6 +140,11 @@ const DeliveryFormContent = styled.div`
     display: flex;
     margin: 10px;
     gap: 30px;
+    div {
+      p {
+        height: 20px;
+      }
+    }
     input {
       height: 30px;
     }
@@ -132,6 +158,17 @@ const TelInput = styled(Input)`
 const TelInputWrap = styled.div`
   display: flex;
   align-items: center;
+  p {
+    height: 20px;
+  }
+`;
+const TelWrap = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  p {
+    height: 20px;
+  }
 `;
 const PostCodeInput = styled(Input)`
   width: 80px;
