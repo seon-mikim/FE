@@ -6,11 +6,11 @@ import styled from 'styled-components';
 import PurchaseCard from '../PurchaseCard/PurchaseCard';
 import { useState } from 'react';
 import EmptyStateCard from '../EmptyStateCard/EmptyStateCard';
-import CartIcon from '../../assets/images/cart_icon.svg'
+import CartIcon from '../../assets/images/cart_icon.svg';
 
 const CartPageContent = () => {
-  const [totalCount, setTotalCount] = useState()
-  const [totalPrice, setTotalPrice] = useState()
+  const [totalCount, setTotalCount] = useState();
+  const [totalPrice, setTotalPrice] = useState();
   const userCartData = [
     {
       productId: 1,
@@ -22,7 +22,15 @@ const CartPageContent = () => {
     },
   ];
 
-  if (userCartData.length === 0) return <EmptyStateCard imageSrc={CartIcon} text='장바구니가 비었습니다.' toPath='/' linkText='상품 보러가기' />;
+  if (userCartData.length === 0)
+    return (
+      <EmptyStateCard
+        imageSrc={CartIcon}
+        text="장바구니가 비었습니다."
+        toPath="/"
+        linkText="상품 보러가기"
+      />
+    );
 
   return (
     <CartContent>
@@ -32,24 +40,22 @@ const CartPageContent = () => {
             key={cartItemData.productId}
             cartItemData={cartItemData}
             setTotalCount={setTotalCount}
-            setTotalPrice={setTotalPrice }
+            setTotalPrice={setTotalPrice}
             border="border"
           />
         ))}
-			</CartList>
-      <PurchaseCard totalPrice={totalPrice} totalCount={totalCount } />
+      </CartList>
+      <PurchaseCard totalPrice={totalPrice} totalCount={totalCount} />
     </CartContent>
   );
 };
 
 export default CartPageContent;
 
-
 const CartContent = styled(Wrap)`
   display: flex;
   gap: 200px;
 `;
-
 
 const CartList = styled(Ul)`
   width: 100%;
