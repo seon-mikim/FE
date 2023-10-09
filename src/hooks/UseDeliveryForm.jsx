@@ -1,6 +1,17 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const UseDeliveryForm = () => {
+  const inputRefs = useRef({});
+  const validationMessage={
+    recipient: '수신자를 입력해주세요',
+    recipient_tel: '핸드폰 번호를 입력하세요',
+    recipient_address: '주소를 입력해주세요',
+	}
+	const [alertMessage, setAlertMassege] = useState({
+    recipient: '',
+    recipient_tel: '',
+    recipient_address: '',
+  });
   const [fullPhoneNumber, setFullPhoneNumber] = useState('');
   const [deliveryInput, setDeliveryInput] = useState({
     recipient: '',
@@ -20,6 +31,12 @@ const UseDeliveryForm = () => {
     setDeliveryInput({ ...deliveryInput, [name]: value });
   };
 
+  const validateInputValue = (name) => {
+    const input = inputRefs.current[name];
+		if (input && input.value === '') setAlertMassege({ ...alertMessage, [name]: validationMessage[name] });
+		else { setAlertMassege({...alertMessage, [name]: ''}) }
+  };
+
   const handlePhoneInputChange = (event) => {
     const { name, value } = event.target;
     setPhoneInput((prevPhoneInput) => {
@@ -33,7 +50,9 @@ const UseDeliveryForm = () => {
       return updatedPhoneInput;
     });
   };
-
+  const addRef = (name, ref) => {
+    inputRefs.current[name] = ref;
+  };
   const getAddress = (recipient_address, recipient_zipcode) => {
     setDeliveryInput({
       ...deliveryInput,
@@ -41,12 +60,16 @@ const UseDeliveryForm = () => {
       recipient_zipcode,
     });
   };
+
   return {
+    addRef,
+    getAddress,
+		validateInputValue,
     handleDevlieInputChange,
     handlePhoneInputChange,
-    getAddress,
     deliveryInput,
     phoneInput,
+		alertMessage
   };
 };
 
