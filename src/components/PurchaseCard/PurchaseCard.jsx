@@ -10,8 +10,9 @@ const PurchaseCard = ({ userCartData, totalPrice, totalCount }) => {
   const pathName = useLocation().pathname;
   const isCartPage = pathName === '/cart';
   const navigate = useNavigate();
-  const handlePurchaseClick = () => {
-    navigate('/order');
+  const handlePurchaseClick = (event) => {
+    const { name } = event.target
+    if(name ==='purchase')return navigate('/order');
   };
   return (
     <PaymentCardWrap>
@@ -29,9 +30,9 @@ const PurchaseCard = ({ userCartData, totalPrice, totalCount }) => {
         </MyPageList>
       )}
       <PaymentInfo labelText="상품금액" value="10000원" />
-      <PaymentInfo labelText="총 결제금액" value={ `${totalPrice}원`} border="borderTop" />
+      <PaymentInfo labelText="총 결제금액" value='10000원' border="borderTop" />
       <PurchaseButtonWrap>
-        <button onClick={handlePurchaseClick}>{isCartPage?'구매하기':'결제하기'}</button>
+        <button onClick={handlePurchaseClick} name={isCartPage? 'purchase': 'payment' }>{isCartPage?'구매하기':'결제하기'}</button>
       </PurchaseButtonWrap>
     </PaymentCardWrap>
   );
@@ -43,7 +44,7 @@ const PaymentCardWrap = styled(Wrap)`
   border: 1px solid #000;
   border-radius: 4px;
   padding: 20px;
-	width: 50%;
+	width: 40%;
   height: 100%;
   font-size: 18px;
 `;

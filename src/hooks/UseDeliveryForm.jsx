@@ -2,12 +2,12 @@ import { useRef, useState } from 'react';
 
 const UseDeliveryForm = () => {
   const inputRefs = useRef({});
-  const validationMessage={
+  const validationMessage = {
     recipient: '수신자를 입력해주세요',
     recipient_tel: '핸드폰 번호를 입력하세요',
     recipient_address: '주소를 입력해주세요',
-	}
-	const [alertMessage, setAlertMassege] = useState({
+  };
+  const [alertMessage, setAlertMassege] = useState({
     recipient: '',
     recipient_tel: '',
     recipient_address: '',
@@ -26,15 +26,18 @@ const UseDeliveryForm = () => {
     thridPhoneNumber: '',
   });
 
-  const handleDevlieInputChange = (event) => {
+  const handleDelieryInputChange = (event) => {
     const { name, value } = event.target;
     setDeliveryInput({ ...deliveryInput, [name]: value });
   };
 
   const validateInputValue = (name) => {
     const input = inputRefs.current[name];
-		if (input && input.value === '') setAlertMassege({ ...alertMessage, [name]: validationMessage[name] });
-		else { setAlertMassege({...alertMessage, [name]: ''}) }
+    if (input && input.value === '')
+      setAlertMassege({ ...alertMessage, [name]: validationMessage[name] });
+    else {
+      setAlertMassege({ ...alertMessage, [name]: '' });
+    }
   };
 
   const handlePhoneInputChange = (event) => {
@@ -45,7 +48,7 @@ const UseDeliveryForm = () => {
       setFullPhoneNumber(updatedFullPhoneNumber);
       setDeliveryInput((prevDeliveryInput) => ({
         ...prevDeliveryInput,
-        recipient_tel: fullPhoneNumber,
+        recipient_tel: updatedFullPhoneNumber,
       }));
       return updatedPhoneInput;
     });
@@ -64,12 +67,12 @@ const UseDeliveryForm = () => {
   return {
     addRef,
     getAddress,
-		validateInputValue,
-    handleDevlieInputChange,
+    validateInputValue,
+    handleDelieryInputChange,
     handlePhoneInputChange,
     deliveryInput,
     phoneInput,
-		alertMessage
+    alertMessage,
   };
 };
 

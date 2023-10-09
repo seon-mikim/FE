@@ -19,7 +19,6 @@ const CartCard = ({ cartItemData, border, setTotalPrice, setTotalCount }) => {
   };
   const handleCheckChange = (event) => {
     const { name } = event.target;
-
     if (name === 'productCheck')
       setIsChecked((prevIsChecked) => !prevIsChecked);
     if (name === 'allProduct') {
@@ -28,9 +27,9 @@ const CartCard = ({ cartItemData, border, setTotalPrice, setTotalCount }) => {
     }
   };
   useEffect(() => {
-    setTotalCount(count)
-    setTotalPrice(cartItemData.price*count)
-},[count])
+    setTotalCount(count);
+    setTotalPrice(cartItemData.price * count);
+  }, [count]);
   return (
     <S.ListItem border={border}>
       <S.AllCheckBoxWrap>
@@ -66,11 +65,11 @@ const CartCard = ({ cartItemData, border, setTotalPrice, setTotalCount }) => {
       </S.ProductInfo>
       <S.OrderTotalPrice>
         <Span text="선택상품가격" />
-        <Span text={cartItemData.price*count} />
+        <Span text={cartItemData.price * count} />
         <Span text="배송비" />
         <Span text={0} />
         <Span text="주문가격" />
-        <Span text={cartItemData.price*count} />
+        <Span text={cartItemData.price * count} />
       </S.OrderTotalPrice>
     </S.ListItem>
   );

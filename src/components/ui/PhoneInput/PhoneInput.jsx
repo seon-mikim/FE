@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Input from '../Input/Input';
 import Text from '../Text/Text';
-import { forwardRef } from 'react';
+import  { Fragment, forwardRef } from 'react';
 
 const phoneInfo = [
   { name: 'fristPhoneNumber', placeholder: '010' },
@@ -16,12 +16,11 @@ const PhoneInput = forwardRef(
     return (
       <label>
         연락처
-        <TelWrap name="">
+        <TelWrap>
           <TelInputWrap>
             {phoneInfo.map(({ name, placeholder }, index) => (
-              <>
+              <Fragment key={name}>
                 <TelInput
-                  key={name}
                   placeholder={placeholder}
                   name={name}
                   value={phoneInput[name]}
@@ -30,7 +29,7 @@ const PhoneInput = forwardRef(
                   ref={ref}
                 />
                 {index < phoneInfo.length - 1 && <div>-</div>}
-              </>
+              </Fragment>
             ))}
           </TelInputWrap>
           <Text text={alertMessage} />

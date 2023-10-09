@@ -11,21 +11,22 @@ const addressInfo = [
 
 const AddressInput = ({
   deliveryInput,
-  handleDelieInputChange,
+  handleDelieryInputChange,
   getAddress,
 }) => {
+ 
   return (
     <label>
       배송지
       <div>
         {addressInfo.map(({ name, placeholder }) => (
           <div key={name}>
-						<AdrressInfoInput
-							width={name }
+            <AdrressInfoInput
+              width={name}
               name={name}
               placeholder={placeholder}
               value={deliveryInput[name]}
-              onChange={handleDelieInputChange}
+              onChange={handleDelieryInputChange}
             />
             {name === 'recipient_zipcode' && (
               <PostCodeButton getAdress={getAddress} />
@@ -40,8 +41,7 @@ const AddressInput = ({
 
 export default AddressInput;
 
-
 const AdrressInfoInput = styled(Input)`
-  width: ${(props) => props.width === 'recipient_zipcode' ? '80px' : '350px'};
-	margin-bottom: 10px;
+  width: ${(props) => (props.width === 'recipient_zipcode' ? '80px' : '350px')};
+  margin-bottom: 10px;
 `;

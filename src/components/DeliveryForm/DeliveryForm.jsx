@@ -8,7 +8,7 @@ import AddressInput from '../ui/AddressInput/AddressInput';
 const DeliveryForm = () => {
   const [isShown, setIsShown] = useState(true);
   const {
-    handleDevlieInputChange,
+    handleDelieryInputChange,
     handlePhoneInputChange,
     getAddress,
     deliveryInput,
@@ -35,7 +35,7 @@ const DeliveryForm = () => {
               placeholder="수령인"
               name="recipient"
               value={deliveryInput.recipient}
-              onChange={handleDevlieInputChange}
+              onChange={handleDelieryInputChange}
               ref={(ref) => addRef('recipient', ref)}
               onBlur={() => validateInputValue('recipient')}
               alertText={alertMessage.recipient}
@@ -49,7 +49,7 @@ const DeliveryForm = () => {
             />
             <AddressInput
               deliveryInput={deliveryInput}
-              handleDevlieInputChange={handleDevlieInputChange}
+              handleDelieryInputChange={handleDelieryInputChange}
               getAddress={getAddress}
             />
           </DeliveryFormContent>
