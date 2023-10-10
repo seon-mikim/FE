@@ -15,7 +15,9 @@ const DeliveryForm = () => {
     phoneInput,
     alertMessage,
     addRef,
-    validateInputValue,
+    validateAddress,
+    validatePhoneNumber,
+    validateUserName,
   } = UseDeliveryForm();
 
   const handleAccordionButton = () => {
@@ -37,20 +39,23 @@ const DeliveryForm = () => {
               value={deliveryInput.recipient}
               onChange={handleDelieryInputChange}
               ref={(ref) => addRef('recipient', ref)}
-              onBlur={() => validateInputValue('recipient')}
+              onBlur={validateUserName}
               alertText={alertMessage.recipient}
             />
             <PhoneInput
               phoneInput={phoneInput}
               handlePhoneInputChange={handlePhoneInputChange}
-              validateInputValue={() => validateInputValue('recipient_tel')}
-              ref={(ref) => addRef('recipient_tel', ref)}
+              validatePhoneNumber={validatePhoneNumber}
+              addRef={addRef}
               alertMessage={alertMessage.recipient_tel}
             />
             <AddressInput
               deliveryInput={deliveryInput}
               handleDelieryInputChange={handleDelieryInputChange}
               getAddress={getAddress}
+              addRef={addRef }
+              validateAddress={validateAddress}
+              alertMessage={alertMessage.recipient_address}
             />
           </DeliveryFormContent>
         )}
@@ -65,7 +70,6 @@ const DeliveryFormWrap = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
-
 `;
 
 const AccordionHeader = styled.div`

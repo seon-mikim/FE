@@ -11,10 +11,12 @@ const addressInfo = [
 
 const AddressInput = ({
   deliveryInput,
+  validateAddress,
   handleDelieryInputChange,
   getAddress,
+  addRef,
+  alertMessage,
 }) => {
- 
   return (
     <label>
       배송지
@@ -26,14 +28,16 @@ const AddressInput = ({
               name={name}
               placeholder={placeholder}
               value={deliveryInput[name]}
+              onBlur={validateAddress }
               onChange={handleDelieryInputChange}
+              ref={(ref) => addRef(name, ref)}
             />
             {name === 'recipient_zipcode' && (
               <PostCodeButton getAdress={getAddress} />
             )}
           </div>
         ))}
-        <Text />
+        <Text text={alertMessage} />
       </div>
     </label>
   );
