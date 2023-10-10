@@ -14,7 +14,7 @@ const ProfileCard = ({ profileData }) => {
   return (
     <S.CardWrapper>
       <S.ImgWrap>
-        <Image imageSrc={checkedProfileImag} altText="유저이미지" />
+        <Image imageSrc={checkedProfileImag} altText="user_img" />
       </S.ImgWrap>
       <S.UserInfo>
         <Wrap>

@@ -6,6 +6,7 @@ const UserOrderContent = () => {
   if (orderItemData.length === 0) return (
     <EmptyStateCard
       imageSrc={OrderIcon}
+      altText='order_icon'
       toPath="/"
       text="구매한 상품이 없습니다."
       linkText="상품 보러가기"

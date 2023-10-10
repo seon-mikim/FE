@@ -31,6 +31,7 @@ const UserCartContent = () => {
       <CartList>
         <EmptyStateCard
           imageSrc={cartIcon}
+          altText='cart_icon'
           toPath="/"
           text="장바구니에 담은 상품이 없습니다."
           linkText="상품 보러가기"
