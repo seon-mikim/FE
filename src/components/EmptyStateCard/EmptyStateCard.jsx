@@ -3,11 +3,11 @@ import Wrap from '../ui/Wrap/Wrap';
 import styled from 'styled-components';
 import Text from '../ui/Text/Text';
 import { Link } from 'react-router-dom';
-const EmptyStateCard = ({ imageSrc, text, toPath, linkText }) => {
+const EmptyStateCard = ({ imageSrc, text, toPath, linkText, altText }) => {
   return (
     <CardItemWrap>
       <ImgWrap>
-        <Image imageSrc={imageSrc} />
+        <Image imageSrc={imageSrc} altText={altText}/>
       </ImgWrap>
       <Text text={text} /> 
       <Link to={toPath}>{linkText}</Link>
@@ -23,7 +23,8 @@ const CardItemWrap = styled(Wrap)`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  border: 1px solid #e2e2e2;
+  border-top: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
   gap: 20px;
   p {
     color: #707070;
