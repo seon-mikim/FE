@@ -24,12 +24,14 @@ const CartPageContent = () => {
 
   if (userCartData.length === 0)
     return (
-      <EmptyStateCard
-        imageSrc={CartIcon}
-        text="장바구니가 비었습니다."
-        toPath="/"
-        linkText="상품 보러가기"
-      />
+      <CartList>
+        <EmptyStateCard
+          imageSrc={CartIcon}
+          text="장바구니가 비었습니다."
+          toPath="/"
+          linkText="상품 보러가기"
+        />
+      </CartList>
     );
 
   return (
