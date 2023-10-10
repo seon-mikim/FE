@@ -8,7 +8,7 @@ const BenefitItem = ({benefitItemData }) => {
     <S.BenefitItemWrap>
       <S.ImgIconTextWrap>
         <S.ImgIconWrap>
-          <Image imageSrc={benefitItemData.icon}/>
+          <Image imageSrc={benefitItemData.icon} altText={benefitItemData.name}/>
         </S.ImgIconWrap>
 				<Span text={benefitItemData.name } />
       </S.ImgIconTextWrap>
