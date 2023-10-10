@@ -1,4 +1,5 @@
-import { UserProfileCard } from "../MypageCard";
+
+import ProfileCard from "../MypageCard/UserProfileCard/ProfileCard";
 
 
 const UserProfileContent = () => {
@@ -11,7 +12,7 @@ const UserProfileContent = () => {
     tel_number: '010-1234-5678',
   };
 
-  return <UserProfileCard profileData={userProfileData} />;
+  return <ProfileCard profileData={userProfileData} />;
 };
 
 export default UserProfileContent;
