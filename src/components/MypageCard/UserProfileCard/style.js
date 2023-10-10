@@ -10,6 +10,7 @@ export const CardWrapper = styled.div`
   padding: 19px 20px;
   align-items: center;
   border: 1px solid #e1e1e1;
+  border-radius: 4px;
 `;
 
 export const ImgWrap = styled(Wrap)`
