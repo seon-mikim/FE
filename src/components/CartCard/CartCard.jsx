@@ -50,7 +50,7 @@ const CartCard = ({ cartItemData, border, setTotalPrice, setTotalCount }) => {
           />
         </Wrap>
         <S.ImgWrap>
-          <Image imageSrc={cartItemData.product_img} />
+          <Image imageSrc={cartItemData.product_img} altText={cartItemData.product_name} />
         </S.ImgWrap>
         <Wrap>
           <Span text={cartItemData.product_name} />
