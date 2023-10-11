@@ -1,42 +1,34 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setAlertMessage,
+  setDeliveryInput,
+  setFullPhoneNumber,
+  setPhoneInput,
+} from '../store/slices/deliveryFormSlice';
 
 const UseDeliveryForm = () => {
+  const { deliveryInput, alertMessage, phoneInput, fullPhoneNumber } =
+    useSelector((state) => state.deliveryFormData );
+  const dispatch = useDispatch();
   const inputRefs = useRef({});
 
-  const [alertMessage, setAlertMessage] = useState({
-    recipient: '',
-    recipient_tel: '',
-    recipient_address: '',
-  });
-  const [fullPhoneNumber, setFullPhoneNumber] = useState('');
-  const [deliveryInput, setDeliveryInput] = useState({
-    recipient: '',
-    recipient_tel: '',
-    recipient_address: '',
-    recipient_zipcode: '',
-    recipient_detail_address: '',
-  });
-  const [phoneInput, setPhoneInput] = useState({
-    firstPhoneNumber: '',
-    secondPhoneNumber: '',
-    thirdPhoneNumber: '',
-  });
-
-  const handleDelieryInputChange = (event) => {
+  const handleDeliveryInputChange = (event) => {
     const { name, value } = event.target;
-    setDeliveryInput({ ...deliveryInput, [name]: value });
+    dispatch(setDeliveryInput({ [name]: value }));
   };
-
   const validateUserName = () => {
     const userName = inputRefs.current['recipient'].value;
     const invalidUserName = userName === '' && userName.trim() === '';
     if (invalidUserName) {
-      setAlertMessage({
-        ...alertMessage,
-        recipient: '이름을 올바르게 작성해주세요',
-      });
+      dispatch(
+        setAlertMessage({
+          ...alertMessage,
+          recipient: '이름을 올바르게 작성해주세요',
+        })
+      );
     } else {
-      setAlertMessage({ ...alertMessage, recipient: '' });
+      dispatch(setAlertMessage({ ...alertMessage, recipient: '' }));
     }
   };
 
@@ -51,27 +43,33 @@ const UseDeliveryForm = () => {
     const invalidDetailAddress = !detailAddress;
 
     if (invalidZipCode || invalidAddress || invalidDetailAddress) {
-      setAlertMessage({
-        ...alertMessage,
-        recipient_address: '올바른 주소를 입력해주세요',
-      });
+      dispatch(
+        setAlertMessage({
+          ...alertMessage,
+          recipient_address: '올바른 주소를 입력해주세요',
+        })
+      );
     } else {
-      setAlertMessage({
-        ...alertMessage,
-        recipient_address: '',
-      });
+      dispatch(
+        setAlertMessage({
+          ...alertMessage,
+          recipient_address: '',
+        })
+      );
     }
   };
 
   const validatePhoneNumber = () => {
     const koreanPhoneNumberRegex = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/;
     if (!koreanPhoneNumberRegex.test(fullPhoneNumber)) {
-      setAlertMessage({
-        ...alertMessage,
-        recipient_tel: '핸드폰 번호가 유효하지 않습니다',
-      });
+      dispatch(
+        setAlertMessage({
+          ...alertMessage,
+          recipient_tel: '핸드폰 번호가 유효하지 않습니다',
+        })
+      );
     } else {
-      setAlertMessage({ ...alertMessage, recipient_tel: '' });
+      dispatch(setAlertMessage({ ...alertMessage, recipient_tel: '' }));
     }
   };
 
@@ -81,28 +79,24 @@ const UseDeliveryForm = () => {
     if (/[^0-9]/.test(value)) {
       return;
     }
-    setPhoneInput((prevPhoneInput) => {
-      const updatedPhoneInput = { ...prevPhoneInput, [name]: value };
-      const updatedFullPhoneNumber = `${updatedPhoneInput.firstPhoneNumber}-${updatedPhoneInput.secondPhoneNumber}-${updatedPhoneInput.thirdPhoneNumber}`;
+    const updatedPhoneInput = { ...phoneInput, [name]: value };
+    const updatedFullPhoneNumber = `${updatedPhoneInput.firstPhoneNumber}-${updatedPhoneInput.secondPhoneNumber}-${updatedPhoneInput.thirdPhoneNumber}`;
 
-      setFullPhoneNumber(updatedFullPhoneNumber);
-      setDeliveryInput((prevDeliveryInput) => ({
-        ...prevDeliveryInput,
-        recipient_tel: updatedFullPhoneNumber,
-      }));
-
-      return updatedPhoneInput;
-    });
+    dispatch(setFullPhoneNumber(updatedFullPhoneNumber));
+    dispatch(setDeliveryInput({ recipient_tel: updatedFullPhoneNumber }));
+    dispatch(setPhoneInput(updatedPhoneInput));
   };
   const addRef = (name, ref) => {
     inputRefs.current[name] = ref;
   };
   const getAddress = (recipient_address, recipient_zipcode) => {
-    setDeliveryInput({
-      ...deliveryInput,
-      recipient_address,
-      recipient_zipcode,
-    });
+    dispatch(
+      setDeliveryInput({
+        ...deliveryInput,
+        recipient_address,
+        recipient_zipcode,
+      })
+    );
   };
 
   return {
@@ -111,11 +105,11 @@ const UseDeliveryForm = () => {
     validateAddress,
     validatePhoneNumber,
     validateUserName,
-    handleDelieryInputChange,
+    handleDeliveryInputChange,
     handlePhoneInputChange,
     deliveryInput,
-    phoneInput,
     alertMessage,
+    phoneInput,
   };
 };
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import UseDeliveryForm from '../../hooks/UseDeliveryForm';
+import useDeliveryForm from '../../hooks/useDeliveryForm';
 import InputLabel from '../ui/InputLabel/InputLabel';
 import PhoneInput from '../ui/PhoneInput/PhoneInput';
 import AddressInput from '../ui/AddressInput/AddressInput';
@@ -8,17 +8,17 @@ import AddressInput from '../ui/AddressInput/AddressInput';
 const DeliveryForm = () => {
   const [isShown, setIsShown] = useState(true);
   const {
-    handleDelieryInputChange,
-    handlePhoneInputChange,
-    getAddress,
-    deliveryInput,
-    phoneInput,
-    alertMessage,
     addRef,
+    getAddress,
     validateAddress,
     validatePhoneNumber,
     validateUserName,
-  } = UseDeliveryForm();
+    handleDeliveryInputChange,
+    handlePhoneInputChange,
+    deliveryInput,
+    alertMessage,
+    phoneInput,
+  } = useDeliveryForm();
 
   const handleAccordionButton = () => {
     setIsShown((prev) => !prev);
@@ -37,7 +37,7 @@ const DeliveryForm = () => {
               placeholder="수령인"
               name="recipient"
               value={deliveryInput.recipient}
-              onChange={handleDelieryInputChange}
+              onChange={handleDeliveryInputChange}
               ref={(ref) => addRef('recipient', ref)}
               onBlur={validateUserName}
               alertText={alertMessage.recipient}
@@ -51,9 +51,9 @@ const DeliveryForm = () => {
             />
             <AddressInput
               deliveryInput={deliveryInput}
-              handleDelieryInputChange={handleDelieryInputChange}
+              handleDelieryInputChange={handleDeliveryInputChange}
               getAddress={getAddress}
-              addRef={addRef }
+              addRef={addRef}
               validateAddress={validateAddress}
               alertMessage={alertMessage.recipient_address}
             />
@@ -84,7 +84,7 @@ const DeliveryFormContent = styled.div`
   border: 1px solid #e2e2e2;
   label {
     display: flex;
-    gap: 30px;
+    gap: 48px;
     div {
       p {
         margin-top: 10px;

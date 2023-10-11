@@ -9,7 +9,7 @@ const UnifiedCartCard = ({ cartDataItem}) => {
     <S.ListItem >
       <S.ProductInfo>
         <S.ImgWrap>
-          <Image imageSrc={cartDataItem.product_img} />
+          <Image imageSrc={cartDataItem.product_img} altText={cartDataItem.product_name}/>
         </S.ImgWrap>
         <Wrap>
           <Span text={cartDataItem.product_name} />

@@ -51,11 +51,9 @@ const TelInput = styled(Input)`
 `;
 const TelInputWrap = styled.div`
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
-  p {
-    height: 20px;
-  }
+
 `;
 const TelWrap = styled.div`
   display: flex;
