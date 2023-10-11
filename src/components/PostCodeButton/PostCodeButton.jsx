@@ -1,6 +1,6 @@
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 
-const PostCodeButton = ({ getAdress}) => {
+const PostCodeButton = ({ getAdress }) => {
   const open = useDaumPostcodePopup();
 
   const handleComplete = (data) => {
@@ -20,7 +20,6 @@ const PostCodeButton = ({ getAdress}) => {
     }
 
     getAdress(fullAddress, zonecode);
-  
   };
   const handleClick = () => {
     open({ onComplete: handleComplete });
