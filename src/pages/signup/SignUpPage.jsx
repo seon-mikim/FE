@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import axios from 'axios';
-import { signUp } from '../../apis/authApi/authApi';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import FormProfileImage from '../../components/SignUp/FormProfileImage.jsx';
+import FormEmail from '../../components/SignUp/FormEmail.jsx';
+import FormPassword from '../../components/SignUp/FormPassword.jsx';
+import FormName from '../../components/SignUp/FormName.jsx';
+import FormAddress from '../../components/SignUp/FormAddress.jsx';
+import FormAddressDetail from '../../components/SignUp/FormAddressDetail.jsx';
+import FormPhoneNumber from '../../components/SignUp/FormPhoneNumber.jsx';
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -21,7 +27,6 @@ function SignUpPage() {
     addressZipcode: '',
     telNumber: '',
     gender: 'male',
-    profileImage: {},
   });
 
   const handleInputChange = (e) => {
@@ -63,11 +68,6 @@ function SignUpPage() {
     }
   };
 
-  const handleProfileImageChange = (e) => {
-    const file = e.target.files[0];
-    setProfileImage(file);
-  };
-
   const handleRegister = async (e) => {
     e.preventDefault();
 
@@ -84,10 +84,10 @@ function SignUpPage() {
       formDataToSend.append('profileImage', profileImage);
 
       const response = await axios.post(
-        'http://15.165.177.248:8080/member/signup',
+        'http://13.124.105.52:8080/auth/signup',
         formDataToSend
       );
-      // signUp(formDataToSend)
+
       response.data.success && navigate('/login', { replace: true });
     } catch (error) {
       alert(error.response.data);
@@ -99,105 +99,29 @@ function SignUpPage() {
     setPasswordConfirm(value);
   };
 
-  const idValidation = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post(
-        'http://15.165.177.248:8080/member/signup',
-        {
-          formData,
-        }
-      );
-
-      console.log('Login successful:', response.data);
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
-  };
-
   return (
     <CenteredContainer>
       <RegistrationContainer>
         <Title>회원가입</Title>
         <Form>
-          <Label htmlFor="profileImage" style={{ marginTop: '10px' }}>
-            프로필 이미지
-          </Label>
-          <Input
-            type="file"
-            id="profileImage"
-            name="profileImage"
-            onChange={handleProfileImageChange}
+          <FormProfileImage setProfileImage={setProfileImage} />
+          <FormEmail
+            formData={formData}
+            handleInputChange={handleInputChange}
           />
-          <Label htmlFor="email">이메일</Label>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              style={{ width: '75%', marginRight: '10px' }}
-            />
-            <Button style={{ fontSize: '12px', height: '38px' }}>
-              중복확인
-            </Button>
-          </div>
-          {emailError && (
-            <p style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>
-              {emailError}
-            </p>
-          )}
-          <Label htmlFor="password">비밀번호</Label>
-          <Input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
+          {emailError && <ErrorText>{emailError}</ErrorText>}
+          <FormPassword
+            formData={formData}
+            handleInputChange={handleInputChange}
+            passwordError={passwordError}
+            passwordConfirm={passwordConfirm}
+            handlePasswordConfirm={handlePasswordConfirm}
           />
-          {passwordError && (
-            <p style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>
-              {passwordError}
-            </p>
-          )}
-          <Label htmlFor="passwordConfirm">비밀번호 중복확인</Label>
-          <Input
-            type="password"
-            id="passwordConfirm"
-            name="passwordConfirm"
-            value={passwordConfirm}
-            onChange={handlePasswordConfirm}
-          />
-          {formData.password !== passwordConfirm && (
-            <p style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>
-              비밀번호가 일치하지 않습니다.
-            </p>
-          )}
-          <Label htmlFor="name">이름</Label>
-          <Input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-          />
-          <Label htmlFor="address">주소</Label>
-          <Input
-            type="text"
-            id="address"
-            name="address"
-            value={formData.address}
-            onChange={handleInputChange}
-          />
-          <Label htmlFor="address">상세 주소</Label>
-          <Input
-            type="text"
-            id="addressDetail"
-            name="addressDetail"
-            value={formData.addressDetail}
-            onChange={handleInputChange}
+          <FormName formData={formData} handleInputChange={handleInputChange} />
+
+          <FormPhoneNumber
+            formData={formData}
+            handleInputChange={handleInputChange}
           />
           <Label htmlFor="postalCode">우편번호</Label>
           <Input
@@ -207,22 +131,19 @@ function SignUpPage() {
             value={formData.addressZipcode}
             onChange={handleInputChange}
           />
-          <Label htmlFor="phoneNumber">휴대폰 번호</Label>
-          <Input
-            type="text"
-            id="telNumber"
-            name="telNumber"
-            value={formData.phoneNumber}
-            onChange={handleInputChange}
+          <FormAddress
+            formData={formData}
+            handleInputChange={handleInputChange}
           />
-          {phoneNumberError && (
-            <p style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>
-              {phoneNumberError}
-            </p>
-          )}
+          <FormAddressDetail
+            formData={formData}
+            handleInputChange={handleInputChange}
+          />
+
+          {phoneNumberError && <ErrorText>{phoneNumberError}</ErrorText>}
           <CheckBoxGroup>
-            <Label>Gender</Label>
-            <div style={{ marginBottom: '10px' }}>
+            <Label>성별</Label>
+            <GenderDiv>
               <CheckBoxLabel>
                 Male
                 <CheckBoxInput
@@ -243,7 +164,7 @@ function SignUpPage() {
                   onChange={handleInputChange}
                 />
               </CheckBoxLabel>
-            </div>
+            </GenderDiv>
           </CheckBoxGroup>
 
           <Button onClick={(e) => handleRegister(e)}>Register</Button>
@@ -317,4 +238,14 @@ const Button = styled.button`
   &:hover {
     background-color: #0056b3;
   }
+`;
+
+const ErrorText = styled.p`
+  color: red;
+  margin-bottom: 10px;
+  font-size: 12px;
+`;
+
+const GenderDiv = styled.div`
+  margin-bottom: 10px;
 `;
