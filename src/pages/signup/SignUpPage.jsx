@@ -121,9 +121,9 @@ function SignUpPage() {
       <RegistrationContainer>
         <Title>회원가입</Title>
         <Form>
-          <Label htmlFor="profileImage" style={{ marginTop: '10px' }}>
+          <ProfileImageLabel htmlFor="profileImage">
             프로필 이미지
-          </Label>
+          </ProfileImageLabel>
           <Input
             type="file"
             id="profileImage"
@@ -131,24 +131,17 @@ function SignUpPage() {
             onChange={handleProfileImageChange}
           />
           <Label htmlFor="email">이메일</Label>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Input
+          <FlexBox>
+            <EmailInput
               type="email"
               id="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              style={{ width: '75%', marginRight: '10px' }}
             />
-            <Button style={{ fontSize: '12px', height: '38px' }}>
-              중복확인
-            </Button>
-          </div>
-          {emailError && (
-            <p style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>
-              {emailError}
-            </p>
-          )}
+            <CheckEmailButton>중복확인</CheckEmailButton>
+          </FlexBox>
+          {emailError && <ErrorText>{emailError}</ErrorText>}
           <Label htmlFor="password">비밀번호</Label>
           <Input
             type="password"
@@ -157,11 +150,7 @@ function SignUpPage() {
             value={formData.password}
             onChange={handleInputChange}
           />
-          {passwordError && (
-            <p style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>
-              {passwordError}
-            </p>
-          )}
+          {passwordError && <ErrorText>{passwordError}</ErrorText>}
           <Label htmlFor="passwordConfirm">비밀번호 중복확인</Label>
           <Input
             type="password"
@@ -171,9 +160,7 @@ function SignUpPage() {
             onChange={handlePasswordConfirm}
           />
           {formData.password !== passwordConfirm && (
-            <p style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>
-              비밀번호가 일치하지 않습니다.
-            </p>
+            <ErrorText>비밀번호가 일치하지 않습니다.</ErrorText>
           )}
           <Label htmlFor="name">이름</Label>
           <Input
@@ -215,14 +202,10 @@ function SignUpPage() {
             value={formData.phoneNumber}
             onChange={handleInputChange}
           />
-          {phoneNumberError && (
-            <p style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>
-              {phoneNumberError}
-            </p>
-          )}
+          {phoneNumberError && <ErrorText>{phoneNumberError}</ErrorText>}
           <CheckBoxGroup>
-            <Label>Gender</Label>
-            <div style={{ marginBottom: '10px' }}>
+            <Label>성별</Label>
+            <GenderDiv>
               <CheckBoxLabel>
                 Male
                 <CheckBoxInput
@@ -243,7 +226,7 @@ function SignUpPage() {
                   onChange={handleInputChange}
                 />
               </CheckBoxLabel>
-            </div>
+            </GenderDiv>
           </CheckBoxGroup>
 
           <Button onClick={(e) => handleRegister(e)}>Register</Button>
@@ -317,4 +300,33 @@ const Button = styled.button`
   &:hover {
     background-color: #0056b3;
   }
+`;
+
+const ErrorText = styled.p`
+  color: red;
+  margin-bottom: 10px;
+  font-size: 12px;
+`;
+
+const EmailInput = styled(Input)`
+  width: 75%;
+  margin-right: 10px;
+`;
+
+const CheckEmailButton = styled(Button)`
+  font-size: 12px;
+  height: 38px;
+`;
+
+const ProfileImageLabel = styled(Label)`
+  margin-top: 10px;
+`;
+
+const FlexBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const GenderDiv = styled.div`
+  margin-bottom: 10px;
 `;
