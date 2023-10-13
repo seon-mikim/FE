@@ -2,16 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
   paymentInput: {
-    userEmail: '',
+    email: '',
     cardNumber: '',
-    cardExpirationPeriod: '',
-    cardCvc: '',
+    expirationDate: '',
+    cvcNumber: '',
   },
   alertMessage: {
-    userEmail: '',
+    email: '',
     cardNumber: '',
-    cardExpirationPeriod: '',
-    cardCvc: '',
+    expirationDate: '',
+    cvcNumber: '',
   },
   cardNumberInput: {
     firstCardNumber: '',

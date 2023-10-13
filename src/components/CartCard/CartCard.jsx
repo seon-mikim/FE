@@ -45,11 +45,9 @@ const CartCard = ({
   };
   const handleCheckChange = (event) => {
     const { name } = event.target;
-  
-   
+
     if (name === 'productCheck') {
       setIsChecked((prevIsChecked) => !prevIsChecked);
-    
     } else if (name === 'allProduct') {
       setIsChecked(!isChecked);
       setIsAllChecked(!isAllChecked);
@@ -58,7 +56,7 @@ const CartCard = ({
   useEffect(() => {
     setTotalCount(cartItemData.cartProductCount);
     onTotalPriceChange(cartItemData.productPrice);
-     if (isAllChecked) return getCardProductId(cartItemData.cartProductId);
+    if (isAllChecked) return getCardProductId(cartItemData.cartProductId);
   }, [cartItemData.cartProductCount, cartItemData.productPrice]);
 
   return (

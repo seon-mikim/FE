@@ -31,8 +31,9 @@ export const getCartListSlice = createSlice({
         (item) => item.cartProductId === action.payload.cartProductId
       );
       if (product) {
+        const originalPrice = product.productPrice / product.cartProductCount;
         product.cartProductCount += 1;
-        product.productPrice = product.productPrice + product.productPrice;
+        product.productPrice = originalPrice * product.cartProductCount;
       }
     },
     decrementQuantity: (state, action) => {
@@ -40,8 +41,9 @@ export const getCartListSlice = createSlice({
         (item) => item.cartProductId === action.payload.cartProductId
       );
       if (product && product.cartProductCount > 1) {
+        const originalPrice = product.productPrice / product.cartProductCount;
         product.cartProductCount -= 1;
-        product.productPrice = product.productPrice - product.cartProductCount;
+        product.productPrice = originalPrice * product.cartProductCount;
       }
     },
     saveCart: (state) => {

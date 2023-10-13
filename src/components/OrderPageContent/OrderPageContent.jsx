@@ -4,11 +4,19 @@ import PaymentForm from '../PaymentForm/PaymentForm';
 import styled from 'styled-components';
 import Wrap from '../ui/Wrap/Wrap';
 import useGetCartProductList from '../../hooks/useGetCartProductList';
+import { useEffect } from 'react';
 
 
 const OrderPageContent = () => {
-  const { entities:cartData, loading, error } = useGetCartProductList();
 
+const  {
+    entities:cartData,
+    loading,
+    error,
+    getCartProductList
+  } = useGetCartProductList()
+ 
+  useEffect(() => {getCartProductList() },[])
   return (
     <>
       <FormWrap>

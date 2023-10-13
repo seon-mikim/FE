@@ -15,7 +15,7 @@ const CartPageContent = () => {
   const [totalCount, setTotalCount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [cartProductId, setCartProductId] = useState({cartProductId: ''})
-  const { entities:cartData, error, loading } = useGetCartProductList()
+  const { entities:cartData, error, loading, getCartProductList } = useGetCartProductList()
 
   const handleTotalPriceChange = (newTotalPrice) => {
     setTotalPrice(newTotalPrice);
@@ -36,7 +36,7 @@ const CartPageContent = () => {
       console.error(error)
    }
   };
-  
+  useEffect(()=> {getCartProductList()},[])
   useEffect(() => {}, [totalPrice, totalCount]);
   if(loading) return <>로딩중입니다.</>
   if (cartData===undefined||cartData.length === 0)

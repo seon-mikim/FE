@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { initialState, setDeliveryInput, setPhoneInput } from '../../store/slices/deliveryFormSlice';
 import { initialState as paymentInit  , setCardNumberInput, setPaymentInput } from '../../store/slices/paymentFormSlice';
 import useGetCartProductList from '../../hooks/useGetCartProductList';
+import useCartSave from '../../hooks/useCartSave';
 
 const PurchaseCard = ({
   cartData,
@@ -26,7 +27,7 @@ totalCount
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [orderData, setOrderData] = useState({});
-  const { handleSaveCart } = useGetCartProductList();
+  const { handleSaveCart } = useCartSave();
   const allValuesEmpty = (obj) => {
     return Object.values(obj).every((value) => value === '');
   };
