@@ -2,16 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
   deliveryInput: {
-    recipient: '',
-    recipient_tel: '',
-    recipient_address: '',
-    recipient_zipcode: '',
-    recipient_detail_address: '',
+    userName: '',
+    tellNumber: '',
+    address: '',
+    addressZipcode: '',
+    addressDetail: '',
   },
   alertMessage: {
-    recipient: '',
-    recipient_tel: '',
-    recipient_address: '',
+    userName: '',
+    tellNumber: '',
+    address: '',
   },
   phoneInput: {
     firstPhoneNumber: '',

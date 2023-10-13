@@ -3,7 +3,7 @@ import {axiosImgInstance,
 } from '../axiosInstance/axiosInstance';
 
 export const signUp = async (signupData) => {
-  const response = await axiosImgInstance.post('member/signup', signupData);
+  const response = await axiosImgInstance.post('auth/signup', signupData);
   console.log(response.data)
   return response.data;
 }

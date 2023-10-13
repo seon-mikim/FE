@@ -1,78 +1,45 @@
 import CartCard from '../CartCard/CartCard';
 import Ul from '../ui/Ul/Ul';
 import Wrap from '../ui/Wrap/Wrap';
-import T from '../../assets/images/black_t.jpg';
 import styled from 'styled-components';
 import PurchaseCard from '../PurchaseCard/PurchaseCard';
 import { useEffect, useState } from 'react';
 import EmptyStateCard from '../EmptyStateCard/EmptyStateCard';
 import CartIcon from '../../assets/images/cart_icon.svg';
+import useGetCartProductList from '../../hooks/useGetCartProductList';
+import { deleteAllCartList } from '../../apis/cartApi/cartApi';
 
-const userCartData = {
-  cartId: 1,
-  product: [
-    {
-      productId: 1,
-      productName: '티셔츠',
-      productImage: T,
-      option: [
-        {
-          stockQuantity: 1,
-          productPrice: 10000,
-          stockColor: 'black',
-          stockSize: 's',
-        },
-      ],
-    },
-  ],
-  totalPrice: 10000,
-};
+
 
 const CartPageContent = () => {
-  const [cartData, setCartData] = useState(userCartData);
   const [totalCount, setTotalCount] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(userCartData.totalPrice);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [cartProductId, setCartProductId] = useState({cartProductId: ''})
+  const { entities:cartData, error, loading } = useGetCartProductList()
+
   const handleTotalPriceChange = (newTotalPrice) => {
     setTotalPrice(newTotalPrice);
   };
   const handleTotalQuantityChange = (newTotalCount) => {
     setTotalCount(newTotalCount);
   };
-  const handleDeleteClick = () => {
-    setCartData({ ...cartData, product: [] });
+  const getCardProductId = (id) => {
+    console.log(id)
+    setCartProductId([{ ...cartProductId, cartProductId:id }])
+  }
+  const handleDeleteClick = async () => {
+    console.log(cartProductId)
+    try {
+      const response = await deleteAllCartList(cartProductId)
+      return response
+    } catch (error) {
+      console.error(error)
+   }
   };
-  const updateProductOption = (
-    productId,
-    optionIndex,
-    newQuantity,
-    newPrice
-  ) => {
-    const newCartData = { ...cartData };
-    const productIndex = newCartData.product.findIndex(
-      (p) => p.productId === productId
-    );
-
-    if (productIndex !== -1) {
-      newCartData.product[productIndex].option[optionIndex].stockQuantity =
-        newQuantity;
-      newCartData.product[productIndex].option[optionIndex].productPrice =
-        newPrice;
-
-      let newTotalPrice = 0;
-      newCartData.product.forEach((p) => {
-        p.option.forEach((opt) => {
-          newTotalPrice += opt.stockQuantity * opt.productPrice;
-        });
-      });
-
-      newCartData.totalPrice = newTotalPrice;
-    }
-
-    setCartData(newCartData);
-  };
-  useEffect(() => {}, [totalPrice]);
-
-  if (cartData.product.length === 0)
+  
+  useEffect(() => {}, [totalPrice, totalCount]);
+  if(loading) return <>로딩중입니다.</>
+  if (cartData===undefined||cartData.length === 0)
     return (
       <CartList>
         <EmptyStateCard
@@ -88,27 +55,29 @@ const CartPageContent = () => {
     <CartContent>
       <CartList>
         <ButtonContainer>
-          <CartAllDeleteButtton onClick={handleDeleteClick}>
+          <CartAllDeleteButtton
+            onClick={() => handleDeleteClick()}
+          >
             전체 삭제
           </CartAllDeleteButtton>
         </ButtonContainer>
-        {cartData.product.map((cartItemData) => (
+        {cartData.map((cartItemData) => (
           <CartCard
-            cardId={cartData.cartId}
+            getCardProductId={getCardProductId}
+            productId={cartItemData.productId}
+            cartProductId={cartItemData.cartProductId}
             key={cartItemData.productId}
             cartItemData={cartItemData}
             setTotalCount={handleTotalQuantityChange}
             onTotalPriceChange={handleTotalPriceChange}
-            totalPrice={totalPrice}
-            updateProductOption={updateProductOption}
             border="border"
           />
         ))}
       </CartList>
       <PurchaseCard
         cartData={cartData}
-        totalPrice={totalPrice}
         totalCount={totalCount}
+        totalPrice={totalPrice}
       />
     </CartContent>
   );

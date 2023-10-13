@@ -7,6 +7,6 @@ export const store = configureStore({
   reducer: {
     deliveryFormData: deliveryReducer,
     paymentFormData: paymentReducer,
-    cart: cartReducer,
+    getCarts: cartReducer,
   },
 });

@@ -8,26 +8,27 @@ const UnifiedCartCard = ({ cartDataItem }) => {
       <S.ProductInfo>
         <S.ImgWrap>
           <Image
-            imageSrc={cartDataItem.productImage}
+            imageSrc={cartDataItem.goodsImageDtoList[0].productImageSave}
             altText={cartDataItem.productName}
           />
         </S.ImgWrap>
         <div>
           <Span text={cartDataItem.productName} />
-          {cartDataItem.option.map((optionData, optionIndex) => (
-            <S.OrderOptionInfo key={optionIndex}>
-              <div>
-                <Text text={optionData.stockColor} />
-                <Text text={optionData.stockSize} />
-              </div>
-                <Span text={`${optionData.stockQuantity}개`} />
-              <div>
-                <S.OrderPriceText
-                  text={`${optionData.productPrice * optionData.stockQuantity}원`}
-                />
-              </div>
-            </S.OrderOptionInfo>
-          ))}
+
+          <S.OrderOptionInfo>
+            <div>
+              <Text text={cartDataItem.cartProductColor} />
+              <Text text={cartDataItem.cartProductSize} />
+            </div>
+            <Span text={`${cartDataItem.cartProductCount}개`} />
+            <div>
+              <S.OrderPriceText
+                text={`${
+                  cartDataItem.productPrice * cartDataItem.cartProductCount
+                }원`}
+              />
+            </div>
+          </S.OrderOptionInfo>
         </div>
       </S.ProductInfo>
     </S.ListItem>

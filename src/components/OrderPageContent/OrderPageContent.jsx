@@ -3,18 +3,19 @@ import PurchaseCard from '../PurchaseCard/PurchaseCard';
 import PaymentForm from '../PaymentForm/PaymentForm';
 import styled from 'styled-components';
 import Wrap from '../ui/Wrap/Wrap';
-import { useLocation } from 'react-router-dom';
+import useGetCartProductList from '../../hooks/useGetCartProductList';
+
 
 const OrderPageContent = () => {
- const location = useLocation();
- const { cartData } = location.state;
+  const { entities:cartData, loading, error } = useGetCartProductList();
+
   return (
     <>
       <FormWrap>
         <DeliveryForm />
         <PaymentForm />
       </FormWrap>
-      <PurchaseCard userCartData={cartData} totalPrice={cartData.totalPrice} />
+      <PurchaseCard cartData={cartData} />
     </>
   );
 };
