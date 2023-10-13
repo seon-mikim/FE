@@ -3,19 +3,48 @@ import Wrap from '../ui/Wrap/Wrap';
 import Image from '../ui/Image/Image';
 import Text from '../ui/Text/Text';
 import * as S from './style';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-const CartCard = ({ cartItemData, border, setTotalPrice, setTotalCount }) => {
-  const [count, setCount] = useState(cartItemData.count);
+const CartCard = ({
+  cartItemData,
+  border,
+  totalPrice,
+  onTotalPriceChange,
+  setTotalCount,
+  updateProductOption,
+}) => {
+  console.log(totalPrice);
+  const [options, setOptions] = useState(cartItemData.option);
   const [isChecked, setIsChecked] = useState(true);
   const [isAllChecked, setIsAllChecked] = useState(true);
 
-  const handleCountButton = (event) => {
-    const { name } = event.target;
-    if (name === 'increase') {
-      setCount((prev) => prev + 1);
+  const handleCountButton = (optionIndex, action) => {
+    const updatedOptions = [...options];
+    let newTotalCount = 0;
+
+    if (action === 'increase') {
+      updatedOptions[optionIndex].stockQuantity += 1;
+    } else if (
+      action === 'decrease' &&
+      updatedOptions[optionIndex].stockQuantity > 1
+    ) {
+      updatedOptions[optionIndex].stockQuantity -= 1;
     }
-    if (count > 1 && name === 'decrease') return setCount((prev) => prev - 1);
+updateProductOption(
+  cartItemData.productId,
+  optionIndex,
+  updatedOptions[optionIndex].stockQuantity,
+  updatedOptions[optionIndex].productPrice
+);
+
+    const newTotalPrice = updatedOptions.reduce((total, optionData) => {
+      newTotalCount += optionData.stockQuantity; // 갯수 합계를 계산
+      return total + optionData.stockQuantity * optionData.productPrice;
+    }, 0);
+
+    setOptions(updatedOptions);
+    onTotalPriceChange(newTotalPrice);
+    setTotalCount(newTotalCount); // 총 갯수 업데이트
   };
   const handleCheckChange = (event) => {
     const { name } = event.target;
@@ -26,10 +55,7 @@ const CartCard = ({ cartItemData, border, setTotalPrice, setTotalCount }) => {
       setIsAllChecked((prevIsChecked) => !prevIsChecked);
     }
   };
-  useEffect(() => {
-    setTotalCount(count);
-    setTotalPrice(cartItemData.price * count);
-  }, [count]);
+
   return (
     <S.ListItem border={border}>
       <S.AllCheckBoxWrap>
@@ -50,26 +76,46 @@ const CartCard = ({ cartItemData, border, setTotalPrice, setTotalCount }) => {
           />
         </Wrap>
         <S.ImgWrap>
-          <Image imageSrc={cartItemData.product_img} altText={cartItemData.product_name} />
+          <Image
+            imageSrc={cartItemData.productImage}
+            altText={cartItemData.productName}
+          />
         </S.ImgWrap>
-        <Wrap>
-          <Span text={cartItemData.product_name} />
-          <Text text={cartItemData.option} />
-        </Wrap>
-        <S.CountWrap onClick={handleCountButton}>
-          <button name="decrease">-</button>
-          <input type="number" value={count} />
-          <button name="increase">+</button>
-        </S.CountWrap>
-        <S.PriceText text={cartItemData.price} />
+        <S.OptionWrap>
+          <Span text={cartItemData.productName} />
+          <S.CountWrap>
+            {options.map((optionData, optionIndex) => (
+              <>
+                <div>
+                  <Text text={optionData.stockColor} />
+                  <Text text={optionData.stockSize} />
+                </div>
+                <div>
+                  <button
+                    onClick={() => handleCountButton(optionIndex, 'decrease')}
+                  >
+                    -
+                  </button>
+                  <input type="number" value={optionData.stockQuantity} />
+                  <button
+                    onClick={() => handleCountButton(optionIndex, 'increase')}
+                  >
+                    +
+                  </button>
+                </div>
+                <S.PriceText text={`${optionData.productPrice} 원`} />
+              </>
+            ))}
+          </S.CountWrap>
+        </S.OptionWrap>
       </S.ProductInfo>
       <S.OrderTotalPrice>
-        <Span text="선택상품가격" />
-        <Span text={cartItemData.price * count} />
+        <Span text="총 상품가격" />
+        <Span text={`${totalPrice} 원`} />
         <Span text="배송비" />
         <Span text={0} />
         <Span text="주문가격" />
-        <Span text={cartItemData.price * count} />
+        <Span text={`${totalPrice} 원`} />
       </S.OrderTotalPrice>
     </S.ListItem>
   );

@@ -12,7 +12,8 @@ import { useDispatch } from 'react-redux';
 import { initialState, setDeliveryInput, setPhoneInput } from '../../store/slices/deliveryFormSlice';
 import { initialState as paymentInit  , setCardNumberInput, setPaymentInput } from '../../store/slices/paymentFormSlice';
 
-const PurchaseCard = ({ userCartData, totalPrice, totalCount }) => {
+const PurchaseCard = ({ userCartData, totalPrice, totalCount, cartData }) => {
+  console.log(totalPrice)
   const pathName = useLocation().pathname;
 
   const { deliveryInput } = useDeliveryForm();
@@ -28,7 +29,7 @@ const PurchaseCard = ({ userCartData, totalPrice, totalCount }) => {
   const handlePurchaseClick = (event) => {
     const { name } = event.target;
 
-    if (name === 'purchase') return navigate('/order');
+    if (name === 'purchase') return navigate('/order', { state: { cartData } });
     if (name === 'payment') {
       if (!allValuesEmpty(deliveryInput) && !allValuesEmpty(paymentInput)) {
         setOrderData({ ...orderData, ...deliveryInput, ...paymentInput });
@@ -50,13 +51,13 @@ const PurchaseCard = ({ userCartData, totalPrice, totalCount }) => {
   }, [orderData]);
   console.log(orderData);
   return (
-    <PaymentCardWrap>
-      <Span text={isCartPage ? '결제정보' : '주문상품 1개'} />
+    <PaymentCardWrap margin={isCartPage ? 'marginTop' : ''}>
+      <Span text={isCartPage ? '결제정보' : `주문정보`} />
       {isCartPage ? (
         <PaymentInfo labelText="상품수" value={`${totalCount}개`} />
       ) : (
         <Ul>
-          {userCartData.map((cartDataItem) => (
+          {userCartData.product.map((cartDataItem) => (
             <UnifiedCartCard
               key={cartDataItem.productId}
               cartDataItem={cartDataItem}
@@ -64,10 +65,10 @@ const PurchaseCard = ({ userCartData, totalPrice, totalCount }) => {
           ))}
         </Ul>
       )}
-      <PaymentInfo labelText="상품금액" value='10000원' />
+      <PaymentInfo labelText="상품금액" value="10000원" />
       <PaymentInfo
         labelText="총 결제금액"
-        value={`${totalPrice}원`}
+        value={isCartPage ? `${totalPrice}원` : `${userCartData.totalPrice}원`}
         border="borderTop"
       />
       <PurchaseButtonWrap>
@@ -86,10 +87,11 @@ export default PurchaseCard;
 
 const PaymentCardWrap = styled(Wrap)`
   border: 1px solid #000;
+  margin-top: ${(props) => props.margin === 'marginTop' && '60px'};
   border-radius: 4px;
   padding: 20px;
   width: 40%;
-  height: 100%;
+  height: ${(props) => props.margin === 'marginTop' ? '80%': '100%'};
   font-size: 18px;
 `;
 
